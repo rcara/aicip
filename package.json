@@ -13,6 +13,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "node scripts/migrate.mjs",
     "db:seed": "tsx src/db/seed.ts",
+    "admin:grant": "tsx scripts/grant-admin.ts",
+    "account:purge": "tsx scripts/purge-accounts.ts",
     "scenario:validate": "tsx scripts/validate-scenario.ts"
   },
   "dependencies": {

@@ -177,6 +177,18 @@ export const analyticsEvents = pgTable(
   (table) => [index("analytics_kind_created_idx").on(table.kind, table.createdAt)],
 );
 
+export const deletionJournal = pgTable(
+  "deletion_journal",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id").notNull(),
+    attemptCount: integer("attempt_count").notNull(),
+    eventCount: integer("event_count").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("deletion_journal_created_idx").on(table.createdAt)],
+);
+
 export const aiUsage = pgTable("ai_usage", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("user_id"),
