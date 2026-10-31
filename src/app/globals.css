@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f3eee6;
+  --paper-2: #fffdf9;
+  --ink: #1b2430;
+  --ink-soft: #445066;
+  --line: #e3d8c8;
+  --accent: #8a3d18;
+  --accent-ink: #fff8f3;
+  --pine: #1d5c4c;
+  --pine-soft: #e6f3ee;
+  --danger: #8d2f2f;
+  --focus: #0c5f74;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-pine: var(--pine);
+  --color-pine-soft: var(--pine-soft);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-source);
+  --font-serif: var(--font-fraunces);
+}
+
+html {
+  font-size: 100%;
+}
+
+html[data-text="large"] {
+  font-size: 118%;
+}
+
+.locale-en {
+  display: none;
+}
+
+html[lang="en"] .locale-fr {
+  display: none;
+}
+
+html[lang="en"] .locale-en {
+  display: inline;
+}
+
+body {
+  background:
+    radial-gradient(900px 420px at 0% -10%, rgb(138 61 24 / 8%), transparent 55%),
+    var(--paper);
+  color: var(--ink);
+  font-family: var(--font-source), "Source Sans 3", sans-serif;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 50;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper-2);
+  padding: 0.6rem 1rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

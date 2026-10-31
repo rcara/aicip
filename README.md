@@ -1,40 +1,71 @@
-# Interactive Soft Skills Academy — dossier de lancement (v1.0)
+# Interactive Soft Skills Academy
 
-Plateforme SaaS d'apprentissage de soft skills par simulations professionnelles interactives et feedback IA. Concept inspiré de la mécanique d'apprentissage active de Scrimba, sans reprise de ses éléments de marque, de code ou de contenus.
+Simulation courte pour s'exercer aux conversations difficiles : pause, décision, rejeu, débriefing. L'interface est en français. Les chaînes d'interface existent aussi en anglais ; le scénario publié reste en français.
 
-## Fichiers
+Ce dépôt est un monolithe Next.js. Le Sprint 1 se lance en local, sans modèle de langage externe. Aucun déploiement de production n'est prévu par ces commandes.
 
-1. `01_CAHIER_DES_CHARGES.md` : vision, positionnement, parcours, exigences fonctionnelles/non fonctionnelles, critères de réussite, risques.
-2. `02_MVP_BACKLOG.md` : périmètre P0/P1/P2, user stories, critères d'acceptation, plan de sprints, pilotage.
-3. `03_ARCHITECTURE_TECHNIQUE.md` : architecture Next.js/PostgreSQL/LLM, modèle de données, contrats, sécurité, Docker, CI/CD, sauvegardes.
-4. `04_MASTER_PROMPT_CURSOR.md` : prompt principal, à coller dans Cursor en mode Agent, racine du dépôt ouverte.
-5. `05_SCENARIO_PILOTE.json` : spécification de scénario de démonstration à transformer en seed conforme aux schémas de l'application.
-6. `.cursor/rules/project.mdc` : règles permanentes de développement à importer dans le projet Cursor.
+Les spécifications produit sont dans `docs/` :
 
-## Démarrage recommandé
+- `docs/01_CAHIER_DES_CHARGES.md`
+- `docs/02_MVP_BACKLOG.md`
+- `docs/03_ARCHITECTURE_TECHNIQUE.md`
+- `docs/04_MASTER_PROMPT_CURSOR.md`
+- `docs/05_SCENARIO_PILOTE.json`
+- `docs/IMPLEMENTATION_PLAN.md`
+- `docs/DECISIONS.md`
+- `docs/SPRINT1_REPORT.md`
 
-1. Créer un dépôt GitHub **privé** vide ; ouvrir son dossier local dans Cursor.
-2. Copier `.cursor/rules/project.mdc` dans le dépôt et déposer les autres documents dans `docs/`.
-3. Coller le fichier `04_MASTER_PROMPT_CURSOR.md` dans Cursor Agent.
-4. Laisser Cursor réaliser l'inspection et le **Sprint 1** ; valider les critères de recette avant la suite.
-5. Tester la première simulation en environnement local, sans clé API obligatoire grâce au fournisseur IA simulé.
+## Prérequis
 
-## Principes non négociables
+- Node.js 22 (vérifié ici : 22.23.4) et npm 10
+- PostgreSQL local, ou Docker pour le service décrit dans `compose.dev.yml`
 
-- Le scénario, les règles de transition et les rubriques sont versionnés et déterministes.
-- L'IA propose des formulations et des feedbacks **formatifs**, jamais des verdicts d'aptitude professionnelle ni des décisions RH.
-- L'utilisateur peut voir ses décisions, revenir à un point, rejouer et comprendre le feedback.
-- La confidentialité est intégrée dès le MVP ; les réponses sont privées par défaut.
-- La couche LLM est interchangeable, limitée en coût, testable hors ligne.
-- Le VPS de 16 Go/8+ vCPU est **partagé** avec d'autres applications : pas de services lourds superflus.
+Le mot de passe `aicip` de `.env.example` et de Compose est un secret de développement local. Il ne doit pas servir en production. `BETTER_AUTH_SECRET` doit être une chaîne aléatoire d'au moins 32 caractères. L'application refuse une valeur qui commence par `replace-with`.
 
-## Références utiles, à vérifier avant implémentation
+## Lancer en local
 
-- Scrimba : https://docs.scrimba.com/explain/scrims
-- Next.js : https://nextjs.org/docs/app
-- Auth Next.js : https://nextjs.org/docs/app/guides/authentication
-- OWASP LLM Top 10 2026 : https://github.com/GenAI-Security-Project/GenAI-LLM-Top10
-- Loi suisse protection des données/IA : https://www.edoeb.admin.ch/fr/ia-et-protection-des-donnees
-- AI Act annexe III : https://ai-act-service-desk.ec.europa.eu/fr/ai-act/annex-3
+```bash
+cp .env.example .env
+openssl rand -base64 32
+```
 
-Version : 31 octobre 2026. Hypothèses commerciales non validées par étude terrain.
+Coller le résultat dans `BETTER_AUTH_SECRET` du fichier `.env`. Ne pas commiter `.env`.
+
+Base locale avec Docker, si le démon est disponible :
+
+```bash
+docker compose -f compose.dev.yml up -d postgres
+```
+
+Sans Docker, créer une base PostgreSQL 16+ dont l'URL correspond à `DATABASE_URL` (utilisateur, base et mot de passe locaux `aicip`).
+
+Puis :
+
+```bash
+npm ci
+npm run db:migrate
+npm run db:seed
+npm run dev
+```
+
+Ouvrir `http://127.0.0.1:3000`. Le parcours de démo est « Entretien difficile avec un technicien IT ». Le coach est simulé (`AI_COACH_MODE=mock`) et n'appelle aucun modèle.
+
+`compose.prod.yml` n'est pas une procédure de mise en production. Ne pas l'exécuter pour publier le service.
+
+## Vérifier
+
+```bash
+npm run lint
+npm run typecheck
+npm run scenario:validate
+npm test
+npm run build
+npm run start
+npm run test:e2e
+```
+
+`npm run test:e2e` démarre `npm run start` si le port 3000 est libre, et réutilise un serveur déjà lancé hors CI. Playwright utilise Chromium.
+
+## Scénario et données
+
+`npm run db:seed` publie la version 1 du scénario pilote si son empreinte est nouvelle. Une version déjà publiée n'est pas réécrite : un trigger PostgreSQL refuse la mutation du contenu publié. Rejouer une tentative crée une nouvelle branche et conserve l'originale.
