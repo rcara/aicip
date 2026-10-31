@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 
 import { SimulationPlayer } from "@/components/simulation/player";
-import { getOwnedAttempt, getPublishedBySlug } from "@/db/repository";
-import { getAiCoachMode } from "@/lib/config";
+import { countAiUsageToday, getOwnedAttempt, getPublishedBySlug, recordAiUsage } from "@/db/repository";
+import { getAiCoachMode, getRealCoachConfig } from "@/lib/config";
 import { AppError } from "@/lib/errors";
 import { getMessages } from "@/lib/i18n";
 import { computeFeedback } from "@/modules/learning/feedback";
@@ -41,10 +41,26 @@ export default async function DemoPage({
         actor,
       });
       if (bundle.state.status === "completed") {
+        const mode = getAiCoachMode();
         initialCoach = await runCoach(
-          { feedback: computeFeedback(bundle.published.scenario, bundle.state) },
-          getAiCoachMode(),
+          {
+            feedback: computeFeedback(bundle.published.scenario, bundle.state),
+            briefing: bundle.published.scenario.briefing,
+            objective: bundle.published.scenario.objective,
+            guidelines: bundle.published.scenario.feedback.coachGuidelines,
+            reflectionNote: bundle.row.reflectionNote ?? undefined,
+          },
+          mode,
+          { config: getRealCoachConfig(), usage: await countAiUsageToday(actor) },
         );
+        if (initialCoach) {
+          await recordAiUsage({
+            actor,
+            status: initialCoach.source === "fallback" ? "fallback" : "ok",
+            provider: initialCoach.provider,
+            model: initialCoach.model,
+          });
+        }
       }
     } catch (error) {
       if (error instanceof AppError && error.status === 404) notFound();
