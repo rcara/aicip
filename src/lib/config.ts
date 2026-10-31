@@ -27,3 +27,13 @@ export function requireAuthSecret(): string {
 export function authBaseUrl(): string {
   return process.env.BETTER_AUTH_URL ?? "http://127.0.0.1:3000";
 }
+
+const DEFAULT_RETENTION_DAYS = 365;
+
+export function accountRetentionDays(): number {
+  const raw = process.env.ACCOUNT_RETENTION_DAYS;
+  if (!raw) return DEFAULT_RETENTION_DAYS;
+  const days = Number(raw);
+  if (!Number.isInteger(days) || days < 1 || days > 3650) return DEFAULT_RETENTION_DAYS;
+  return days;
+}

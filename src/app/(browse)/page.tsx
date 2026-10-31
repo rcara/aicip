@@ -7,8 +7,13 @@ export const dynamic = "force-dynamic";
 
 const PILOT = "entretien-difficile-technicien-it";
 
-export default async function HomePage() {
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ compte?: string }>;
+}) {
   const messages = getMessages(await readLocale());
+  const query = await searchParams;
   let scenarios: Awaited<ReturnType<typeof listPublishedScenarios>> = [];
   let unavailable = false;
   try {
@@ -20,6 +25,11 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-16">
+      {query.compte === "supprime" ? (
+        <p className="rounded-3xl border border-line bg-paper-2 px-4 py-3" role="status">
+          {messages.account.deletedBanner}
+        </p>
+      ) : null}
       <section className="grid items-end gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(16rem,0.8fr)]">
         <div>
           <p className="text-sm uppercase tracking-[0.16em] text-accent">{messages.hero.eyebrow}</p>

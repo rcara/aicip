@@ -18,6 +18,7 @@ export function AuthForm({ messages }: { messages: Messages }) {
     <div className="max-w-md">
       <h1 className="font-serif text-5xl tracking-tight">{messages.auth.title}</h1>
       <p className="mt-3 text-ink-soft">{messages.auth.intro}</p>
+      <p className="mt-3 text-sm text-ink-soft">{messages.auth.anonymousStay}</p>
       <form
         className="mt-8 space-y-4"
         onSubmit={(event) => {
