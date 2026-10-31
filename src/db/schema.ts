@@ -178,6 +178,13 @@ export const analyticsEvents = pgTable(
   (table) => [index("analytics_kind_created_idx").on(table.kind, table.createdAt)],
 );
 
+export const interestSignups = pgTable("interest_signups", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull(),
+  message: text("message"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const deletionJournal = pgTable(
   "deletion_journal",
   {

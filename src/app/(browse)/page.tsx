@@ -1,3 +1,4 @@
+import { InterestForm } from "@/components/interest-form";
 import { ScenarioCard } from "@/components/scenario-card";
 import { getMessages } from "@/lib/i18n";
 import { listPublishedScenarios } from "@/db/repository";
@@ -114,6 +115,7 @@ export default async function HomePage({
         <h2 className="font-serif text-3xl">{messages.boundary.title}</h2>
         <p className="mt-3 max-w-3xl text-paper-2/90">{messages.boundary.body}</p>
       </section>
+      <InterestForm messages={messages} />
     </div>
   );
 }

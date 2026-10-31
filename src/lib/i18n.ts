@@ -161,6 +161,10 @@ export const fr = {
         body: "Avec un compte, l'historique, l'export JSON et la suppression sont sur la page Compte. La suppression efface les tentatives et les sessions, écrit un journal sans texte de dialogue, et ne touche pas aux scénarios publiés. Les tentatives anonymes du navigateur ne sont pas fusionnées avec le compte. Le journal et la ligne de compte fermée sont retirés après la rétention configurée, 365 jours par défaut.",
       },
       {
+        heading: "Intérêt volontaire",
+        body: "Le formulaire en bas de l'accueil est facultatif. Il enregistre une adresse et, si vous l'écrivez, un message. Il ne reçoit pas l'indicateur d'exercice et il ne conditionne pas la démo.",
+      },
+      {
         heading: "Cadre",
         body: "Le produit vise un usage volontaire en Suisse et en France. La LPD et le RGPD s'apprécient selon le déploiement réel. Ce texte décrit le fonctionnement de cette version, ce n'est pas un avis juridique.",
       },
@@ -198,6 +202,17 @@ export const fr = {
     unchanged: "Cette empreinte est déjà publiée.",
     invalid: "Le document n'est pas un scénario valide.",
     immutable: "Cette version existe déjà avec un autre contenu.",
+    interest: "Messages d'intérêt",
+    aiUsage: "Appels du coach, sans prompt",
+  },
+  interest: {
+    title: "Rester informé",
+    body: "Facultatif. Ce message n'est pas lié à l'indicateur d'exercice et il n'est pas nécessaire pour lancer la démo.",
+    email: "Adresse e-mail",
+    message: "Message, si vous voulez",
+    submit: "Envoyer",
+    done: "C'est noté. La démo reste ouverte sans cela.",
+    error: "L'envoi n'a pas abouti.",
   },
   errors: {
     notFound: "Cette page n'existe pas.",
@@ -370,6 +385,10 @@ export const en: typeof fr = {
         body: "With an account, history, JSON export, and deletion are on the Account page. Deletion removes attempts and sessions, writes a journal without dialogue text, and does not change published scenarios. Anonymous browser attempts are not merged into the account. The journal and the closed account row are removed after the configured retention, 365 days by default.",
       },
       {
+        heading: "Voluntary interest",
+        body: "The form at the bottom of the home page is optional. It stores an email and, if you write one, a message. It does not receive the practice indicator and it does not gate the demo.",
+      },
+      {
         heading: "Frame",
         body: "The product is aimed at voluntary use in Switzerland and France. The FADP and the GDPR depend on the real deployment. This page describes this version; it is not legal advice.",
       },
@@ -407,6 +426,17 @@ export const en: typeof fr = {
     unchanged: "This fingerprint is already published.",
     invalid: "The document is not a valid scenario.",
     immutable: "This version already exists with different content.",
+    interest: "Interest notes",
+    aiUsage: "Coach calls, without the prompt",
+  },
+  interest: {
+    title: "Stay informed",
+    body: "Optional. This note is not tied to the practice indicator and is not required to start the demo.",
+    email: "Email",
+    message: "Message, if you want",
+    submit: "Send",
+    done: "Noted. The demo stays open without it.",
+    error: "The note could not be sent.",
   },
   errors: {
     notFound: "This page does not exist.",
