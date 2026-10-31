@@ -1,5 +1,5 @@
-import { getOwnedAttempt, recordAiUsage, recordAnalytics } from "@/db/repository";
-import { getAiCoachMode } from "@/lib/config";
+import { countAiUsageToday, getOwnedAttempt, recordAiUsage, recordAnalytics } from "@/db/repository";
+import { getAiCoachMode, getRealCoachConfig } from "@/lib/config";
 import { coachSchema, jsonError } from "@/lib/http";
 import { computeFeedback } from "@/modules/learning/feedback";
 import { runCoach } from "@/modules/ai-coach/provider";
@@ -17,11 +17,27 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     const feedback = computeFeedback(bundle.published.scenario, bundle.state);
     const mode = getAiCoachMode();
     await recordAnalytics({ kind: "ai_request", scenarioDbId: bundle.published.scenarioDbId, actor });
-    const result = await runCoach({ feedback, question: body.question }, mode);
+    const result = await runCoach(
+      {
+        feedback,
+        question: body.question,
+        briefing: bundle.published.scenario.briefing,
+        objective: bundle.published.scenario.objective,
+        guidelines: bundle.published.scenario.feedback.coachGuidelines,
+        reflectionNote: bundle.row.reflectionNote ?? undefined,
+      },
+      mode,
+      { config: getRealCoachConfig(), usage: await countAiUsageToday(actor) },
+    );
     if (!result) {
       return Response.json({ coach: null });
     }
-    await recordAiUsage({ actor, status: result.source === "fallback" ? "fallback" : "ok" });
+    await recordAiUsage({
+      actor,
+      status: result.source === "fallback" ? "fallback" : "ok",
+      provider: result.provider,
+      model: result.model,
+    });
     const after = (await getOwnedAttempt(id, actor)).row.finalScore;
     if (after !== before) {
       throw new Error("Le coach a modifié un indicateur persisté.");
@@ -29,7 +45,7 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     return Response.json({ coach: result });
   } catch (error) {
     const actor = await currentActor().catch(() => null);
-    if (actor) await recordAiUsage({ actor, status: "error" });
+    if (actor) await recordAiUsage({ actor, status: "error", provider: "mock", model: "mock-v1" });
     await recordAnalytics({
       kind: "ai_error",
       actor: actor ?? { userId: null, anonymousTokenHash: null, role: null },

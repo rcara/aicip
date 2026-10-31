@@ -32,6 +32,8 @@ services:
       BETTER_AUTH_URL: ${BETTER_AUTH_URL:?set BETTER_AUTH_URL}
       AI_COACH_MODE: ${AI_COACH_MODE:-mock}
       AI_API_KEY: ${AI_API_KEY:-}
+      # AI_API_BASE_URL is intentionally unset. This network has no egress.
+      # A real coach would need one explicit egress rule to the operator's endpoint, not open egress.
     ports:
       - "127.0.0.1:3000:3000"
     networks:

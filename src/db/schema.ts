@@ -129,6 +129,7 @@ export const attempts = pgTable(
     status: text("status").notNull(),
     finalScore: integer("final_score"),
     transferNote: text("transfer_note"),
+    reflectionNote: text("reflection_note"),
     startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
     completedAt: timestamp("completed_at", { withTimezone: true }),
     expiresAt: timestamp("expires_at", { withTimezone: true }),
@@ -192,6 +193,7 @@ export const deletionJournal = pgTable(
 export const aiUsage = pgTable("ai_usage", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("user_id"),
+  anonymousId: text("anonymous_id"),
   requestType: text("request_type").notNull(),
   provider: text("provider").notNull(),
   model: text("model").notNull(),
