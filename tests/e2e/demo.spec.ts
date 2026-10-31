@@ -69,6 +69,18 @@ test("mobile landing does not overflow and admin is closed", async ({ page }) =>
   expect(response?.status()).toBe(404);
 });
 
+test("interest form does not gate the demo", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("link", { name: "Démarrer la démo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Rester informé" })).toBeVisible();
+  const email = `interest-${test.info().project.name}-${Date.now()}@example.com`;
+  await page.getByLabel("Adresse e-mail").fill(email);
+  await page.getByRole("button", { name: "Envoyer" }).click();
+  await expect(page.getByText("C'est noté")).toBeVisible();
+  await page.getByRole("link", { name: "Démarrer la démo" }).click();
+  await expect(page.getByRole("button", { name: "Commencer l'entretien" })).toBeVisible();
+});
+
 test("unknown scenario shows the empty route", async ({ page }) => {
   const response = await page.goto("/scenarios/scenario-inexistant");
   expect(response?.status()).toBe(404);

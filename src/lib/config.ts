@@ -28,6 +28,10 @@ export function authBaseUrl(): string {
   return process.env.BETTER_AUTH_URL ?? "http://127.0.0.1:3000";
 }
 
+export function cookieSecure(): boolean {
+  return authBaseUrl().startsWith("https://");
+}
+
 const DEFAULT_RETENTION_DAYS = 365;
 
 export type RealCoachConfig = {

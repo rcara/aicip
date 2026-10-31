@@ -25,6 +25,7 @@ import {
   attemptEvents,
   attempts,
   deletionJournal,
+  interestSignups,
   scenarioVersions,
   scenarios,
   session,
@@ -721,12 +722,25 @@ export async function analyticsVolume() {
     .select({ value: count() })
     .from(attempts)
     .where(eq(attempts.status, "completed"));
+  const usage = await db
+    .select({ status: aiUsage.status, count: count() })
+    .from(aiUsage)
+    .groupBy(aiUsage.status);
+  const interest = await db.select({ value: count() }).from(interestSignups);
   return {
     accounts: Number(accounts[0]?.value ?? 0),
     attempts: Number(attemptRows[0]?.value ?? 0),
     completed: Number(completed[0]?.value ?? 0),
+    interest: Number(interest[0]?.value ?? 0),
     kinds: kinds.map((row) => ({ kind: row.kind, count: Number(row.count) })),
+    aiUsage: usage.map((row) => ({ status: row.status, count: Number(row.count) })),
   };
+}
+
+export async function saveInterest(email: string, message: string | null) {
+  const normalized = email.trim().toLowerCase();
+  const note = message?.trim().slice(0, 500) || null;
+  await getDb().insert(interestSignups).values({ email: normalized, message: note });
 }
 
 export async function publishedVersionIsImmutable(versionId: string): Promise<void> {
