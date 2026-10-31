@@ -3,20 +3,31 @@ import { expect, test, type Page } from "@playwright/test";
 const slug = "entretien-difficile-technicien-it";
 const password = "parcours-local-12";
 
+async function authPost(page: Page, path: string, data: Record<string, string>) {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const response = await page.request.post(path, {
+      data,
+      headers: { origin: "http://127.0.0.1:3000" },
+    });
+    if (response.status() === 429) {
+      const retryAfter = Number(response.headers()["x-retry-after"] ?? "10");
+      const seconds = Number.isFinite(retryAfter) && retryAfter > 0 ? retryAfter : 10;
+      await page.waitForTimeout(seconds * 1000);
+      continue;
+    }
+    const body = await response.text();
+    expect(response.ok(), `${response.status()} ${body.slice(0, 300)}`).toBeTruthy();
+    return;
+  }
+  throw new Error(`Auth still rate-limited: ${path}`);
+}
+
 async function signUp(page: Page, email: string) {
-  const response = await page.request.post("/api/auth/sign-up/email", {
-    data: { email, password, name: "Essai local" },
-    headers: { origin: "http://127.0.0.1:3000" },
-  });
-  expect(response.ok()).toBeTruthy();
+  await authPost(page, "/api/auth/sign-up/email", { email, password, name: "Essai local" });
 }
 
 async function signIn(page: Page, email: string) {
-  const response = await page.request.post("/api/auth/sign-in/email", {
-    data: { email, password },
-    headers: { origin: "http://127.0.0.1:3000" },
-  });
-  expect(response.ok()).toBeTruthy();
+  await authPost(page, "/api/auth/sign-in/email", { email, password });
 }
 
 test("two accounts stay isolated and a session can resume", async ({ page, browser }) => {

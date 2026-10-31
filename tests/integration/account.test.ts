@@ -15,11 +15,12 @@ import {
   grantAdmin,
   listAccountHistory,
   purgeExpiredDeletions,
+  saveInterest,
   saveTransferNote,
   seedScenario,
 } from "@/db/repository";
 import { seedPilot } from "@/db/seed";
-import { attempts, deletionJournal, scenarioVersions, user } from "@/db/schema";
+import { attempts, deletionJournal, interestSignups, scenarioVersions, user } from "@/db/schema";
 import type { Actor } from "@/modules/identity/actor";
 import { parseScenario } from "@/modules/scenarios/schema";
 
@@ -138,6 +139,16 @@ describe("account privacy", () => {
     expect(pinned.row.finalScore).toBe(66);
     expect(pinned.published.scenario.version).toBe(1);
     await db.delete(scenarioVersions).where(sql`${scenarioVersions.versionNumber} > 1`);
+  });
+
+  it("stores an interest note without an exercise indicator", async () => {
+    const email = `interest-${crypto.randomUUID()}@example.com`;
+    await saveInterest(email, "Curieux du format, pas d'un score.");
+    const rows = await getDb().select().from(interestSignups).where(eq(interestSignups.email, email));
+    expect(rows).toHaveLength(1);
+    expect(rows[0]?.message).toContain("format");
+    expect(JSON.stringify(rows[0])).not.toContain("finalScore");
+    expect(JSON.stringify(rows[0])).not.toContain("exerciseIndicator");
   });
 
   it("grants admin only to an existing account and purges old deletion rows", async () => {

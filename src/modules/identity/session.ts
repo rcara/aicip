@@ -1,6 +1,6 @@
 import { cookies, headers } from "next/headers";
 
-import { authBaseUrl, requireAuthSecret } from "@/lib/config";
+import { authBaseUrl, cookieSecure, requireAuthSecret } from "@/lib/config";
 import { getDb } from "@/db/client";
 import { account, session, user, verification } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -49,6 +49,7 @@ function createAuth() {
       },
     },
     trustedOrigins: [baseURL, "http://localhost:3000", "http://127.0.0.1:3000"],
+    advanced: { useSecureCookies: cookieSecure() },
     plugins: [nextCookies()],
   });
 }
@@ -105,7 +106,7 @@ export async function actorWithDemoCookie(): Promise<Actor> {
     cookieStore.set(DEMO_COOKIE, token, {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure: cookieSecure(),
       path: "/",
       maxAge: 60 * 60 * 24 * 7,
     });

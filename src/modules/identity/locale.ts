@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 
+import { cookieSecure } from "@/lib/config";
 import { parseLocale } from "@/modules/identity/actor";
 
 export async function setLocaleAction(formData: FormData): Promise<void> {
@@ -10,7 +11,7 @@ export async function setLocaleAction(formData: FormData): Promise<void> {
   cookieStore.set("aicip_locale", locale, {
     path: "/",
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: cookieSecure(),
     maxAge: 60 * 60 * 24 * 365,
   });
 }
