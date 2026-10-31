@@ -5,7 +5,15 @@ import { createAuthClient } from "better-auth/react";
 
 const authClient = createAuthClient();
 
-export function AccountMenu({ signIn, signOut }: { signIn: string; signOut: string }) {
+export function AccountMenu({
+  signIn,
+  signOut,
+  account,
+}: {
+  signIn: string;
+  signOut: string;
+  account: string;
+}) {
   const { data, isPending } = authClient.useSession();
   const [busy, setBusy] = useState(false);
 
@@ -23,6 +31,9 @@ export function AccountMenu({ signIn, signOut }: { signIn: string; signOut: stri
 
   return (
     <span className="flex items-center gap-3">
+      <a className="underline-offset-4 hover:underline" href="/compte">
+        {account}
+      </a>
       <span className="max-w-36 truncate">{data.user.email}</span>
       <button
         className="underline-offset-4 hover:underline disabled:opacity-50"

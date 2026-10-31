@@ -65,8 +65,10 @@ export const fr = {
     rubricNote: "Les poids sont éditoriaux et versionnés. Ils ne mesurent pas une personne.",
     start: "Commencer la démo",
     attempts: "Tentatives sur cet appareil",
+    attemptsAccount: "Vos tentatives",
     resume: "Reprendre",
     none: "Aucune tentative enregistrée sur cet appareil.",
+    noneAccount: "Aucune tentative sur ce compte.",
     back: "Scénarios",
   },
   difficulty: {
@@ -119,6 +121,8 @@ export const fr = {
   auth: {
     title: "Connexion",
     intro: "Le compte sert à retrouver vos tentatives. La démo fonctionne sans inscription.",
+    anonymousStay:
+      "Une tentative commencée sans compte reste sur ce navigateur. La connexion ne la rattache pas au compte.",
     name: "Nom",
     email: "Adresse e-mail",
     password: "Mot de passe",
@@ -147,7 +151,7 @@ export const fr = {
       },
       {
         heading: "Compte, export, suppression",
-        body: "La connexion par e-mail et mot de passe est disponible. L'export complet et la suppression de compte sont prévus ensuite. En attendant, ne saisissez pas de données sensibles dans la note personnelle.",
+        body: "Avec un compte, l'historique, l'export JSON et la suppression sont sur la page Compte. La suppression efface les tentatives et les sessions, écrit un journal sans texte de dialogue, et ne touche pas aux scénarios publiés. Les tentatives anonymes du navigateur ne sont pas fusionnées avec le compte. Le journal et la ligne de compte fermée sont retirés après la rétention configurée, 365 jours par défaut.",
       },
       {
         heading: "Cadre",
@@ -155,8 +159,38 @@ export const fr = {
       },
     ],
   },
+  account: {
+    title: "Compte",
+    intro: "Vos tentatives, sur toutes les versions de scénario que vous avez jouées.",
+    anonymous:
+      "Les tentatives faites sans compte sur ce navigateur restent sur le cookie de démo. Elles n'apparaissent pas ici et ne sont pas fusionnées à la connexion.",
+    empty: "Aucune tentative sur ce compte.",
+    resume: "Reprendre",
+    indicator: "Indicateur d'exercice",
+    export: "Télécharger mes données",
+    delete: "Supprimer le compte",
+    deleteHelp:
+      "Cela retire vos tentatives, vos notes et vos sessions. Le scénario publié n'est pas modifié. Écrivez la phrase demandée pour confirmer.",
+    confirmLabel: "Phrase de confirmation",
+    confirmPhrase: "supprimer mon compte",
+    signIn: "Se connecter pour voir l'historique",
+    deletedBanner: "Le compte a été fermé. Les tentatives associées ont été retirées.",
+  },
   admin: {
     title: "Administration",
+    accounts: "Comptes actifs",
+    attempts: "Tentatives",
+    completed: "Terminées",
+    kinds: "Événements, sans texte",
+    publish: "Publier une version",
+    publishHelp:
+      "Collez un scénario JSON déjà valide. Une version publiée n'est jamais réécrite : changez le numéro de version.",
+    scenarioJson: "Document de scénario",
+    submit: "Publier",
+    published: "Nouvelle version enregistrée.",
+    unchanged: "Cette empreinte est déjà publiée.",
+    invalid: "Le document n'est pas un scénario valide.",
+    immutable: "Cette version existe déjà avec un autre contenu.",
   },
   errors: {
     notFound: "Cette page n'existe pas.",
@@ -233,8 +267,10 @@ export const en: typeof fr = {
     rubricNote: "Weights are editorial and versioned. They do not measure a person.",
     start: "Start the demo",
     attempts: "Attempts on this device",
+    attemptsAccount: "Your attempts",
     resume: "Resume",
     none: "No attempt stored on this device.",
+    noneAccount: "No attempt on this account.",
     back: "Scenarios",
   },
   difficulty: {
@@ -287,6 +323,8 @@ export const en: typeof fr = {
   auth: {
     title: "Sign in",
     intro: "An account is for finding your attempts again. The demo works without signing up.",
+    anonymousStay:
+      "An attempt started without an account stays on this browser. Signing in does not attach it to the account.",
     name: "Name",
     email: "Email",
     password: "Password",
@@ -315,7 +353,7 @@ export const en: typeof fr = {
       },
       {
         heading: "Account, export, deletion",
-        body: "Email and password sign-in is available. Full export and account deletion come next. Until then, do not put sensitive data in the personal note.",
+        body: "With an account, history, JSON export, and deletion are on the Account page. Deletion removes attempts and sessions, writes a journal without dialogue text, and does not change published scenarios. Anonymous browser attempts are not merged into the account. The journal and the closed account row are removed after the configured retention, 365 days by default.",
       },
       {
         heading: "Frame",
@@ -323,8 +361,38 @@ export const en: typeof fr = {
       },
     ],
   },
+  account: {
+    title: "Account",
+    intro: "Your attempts, across every scenario version you have played.",
+    anonymous:
+      "Attempts made without an account on this browser stay on the demo cookie. They do not appear here and are not merged when you sign in.",
+    empty: "No attempt on this account.",
+    resume: "Resume",
+    indicator: "Practice indicator",
+    export: "Download my data",
+    delete: "Delete the account",
+    deleteHelp:
+      "This removes your attempts, notes, and sessions. The published scenario is not changed. Type the requested phrase to confirm.",
+    confirmLabel: "Confirmation phrase",
+    confirmPhrase: "delete my account",
+    signIn: "Sign in to see history",
+    deletedBanner: "The account was closed. Its attempts were removed.",
+  },
   admin: {
     title: "Administration",
+    accounts: "Active accounts",
+    attempts: "Attempts",
+    completed: "Completed",
+    kinds: "Events, without text",
+    publish: "Publish a version",
+    publishHelp:
+      "Paste a scenario JSON document that already validates. A published version is never rewritten: change the version number.",
+    scenarioJson: "Scenario document",
+    submit: "Publish",
+    published: "New version stored.",
+    unchanged: "This fingerprint is already published.",
+    invalid: "The document is not a valid scenario.",
+    immutable: "This version already exists with different content.",
   },
   errors: {
     notFound: "This page does not exist.",

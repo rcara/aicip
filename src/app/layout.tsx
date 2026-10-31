@@ -62,7 +62,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
               <Link className="underline-offset-4 hover:underline" href="/scenarios">
                 {messages.nav.scenarios}
               </Link>
-              <AccountMenu signIn={messages.nav.signIn} signOut={messages.nav.signOut} />
+              <AccountMenu
+                account={messages.nav.account}
+                signIn={messages.nav.signIn}
+                signOut={messages.nav.signOut}
+              />
             </nav>
           </div>
         </header>

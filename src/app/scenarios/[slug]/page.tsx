@@ -50,8 +50,14 @@ export default async function ScenarioPage({ params }: { params: Promise<{ slug:
       <Link className="mt-8 inline-flex rounded-full bg-accent px-5 py-3 text-accent-ink" href={`/demo/${scenario.slug}`}>
         {messages.detail.start}
       </Link>
-      <h2 className="mt-10 font-serif text-2xl">{messages.detail.attempts}</h2>
-      {attempts.length === 0 ? <p className="mt-2 text-sm text-ink-soft">{messages.detail.none}</p> : null}
+      <h2 className="mt-10 font-serif text-2xl">
+        {actor.userId ? messages.detail.attemptsAccount : messages.detail.attempts}
+      </h2>
+      {attempts.length === 0 ? (
+        <p className="mt-2 text-sm text-ink-soft">
+          {actor.userId ? messages.detail.noneAccount : messages.detail.none}
+        </p>
+      ) : null}
       <ul className="mt-3 space-y-2">
         {attempts.map((attempt) => (
           <li key={attempt.id}>

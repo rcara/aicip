@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { SimulationPlayer } from "@/components/simulation/player";
 import { getOwnedAttempt, getPublishedBySlug } from "@/db/repository";
 import { getAiCoachMode } from "@/lib/config";
+import { AppError } from "@/lib/errors";
 import { getMessages } from "@/lib/i18n";
 import { computeFeedback } from "@/modules/learning/feedback";
 import { runCoach } from "@/modules/ai-coach/provider";
@@ -45,7 +46,8 @@ export default async function DemoPage({
           getAiCoachMode(),
         );
       }
-    } catch {
+    } catch (error) {
+      if (error instanceof AppError && error.status === 404) notFound();
       initialError = messages.player.error;
     }
   }

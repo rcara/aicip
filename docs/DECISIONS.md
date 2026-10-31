@@ -61,3 +61,13 @@ L'interface est française. `src/lib/i18n.ts` contient un dictionnaire anglais t
 ## Confidentialité
 
 Les tentatives sont privées par défaut. La liste d'un scénario filtre en SQL sur le propriétaire et sur toutes les versions de ce scénario, pas seulement la dernière version publiée. Aucun score de personnalité, d'employabilité ou de performance RH n'est calculé.
+
+## Compte et suppression (Sprint 2)
+
+Une tentative créée avec une session est liée à `userId`. Le hash du cookie de démo n'est pas copié sur cette ligne. Les tentatives anonymes restent sur le cookie : la connexion ne les fusionne pas avec le compte. Ce choix est affiché sur la connexion, la page Compte et la page confidentialité.
+
+L'export JSON contient le compte demandeur, ses tentatives, les identifiants de nœuds et de choix, et sa note de transfert. Il ne contient pas le mot de passe, le jeton de session, ni les données d'un autre compte.
+
+La suppression exige la phrase « supprimer mon compte » ou « delete my account ». Elle efface les tentatives du compte et les sessions, retire le mot de passe, pose `deleted_at`, et écrit `deletion_journal` avec des compteurs seulement. Les versions de scénario ne sont pas modifiées. `ACCOUNT_RETENTION_DAYS` vaut 365 par défaut (borné de 1 à 3650). `npm run account:purge` retire ensuite les journaux et les lignes de compte plus anciens. `npm run admin:grant` attribue `admin` à un compte existant et n'en crée pas.
+
+L'administration affiche des volumes (comptes, tentatives, kinds) sans liste d'adresses et sans texte de dialogue. Publier passe par `seedScenario` : même empreinte, aucun changement ; même numéro avec un autre contenu, refus avant même le trigger.

@@ -3,6 +3,7 @@ import { cookies, headers } from "next/headers";
 import { authBaseUrl, requireAuthSecret } from "@/lib/config";
 import { getDb } from "@/db/client";
 import { account, session, user, verification } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import {
   DEMO_COOKIE,
   hashDemoToken,
@@ -64,7 +65,15 @@ export function getAuth(): AuthInstance {
 export async function getSessionUser() {
   try {
     const result = await getAuth().api.getSession({ headers: await headers() });
-    return result?.user ?? null;
+    const current = result?.user;
+    if (!current) return null;
+    const rows = await getDb()
+      .select({ deletedAt: user.deletedAt })
+      .from(user)
+      .where(eq(user.id, current.id))
+      .limit(1);
+    if (!rows[0] || rows[0].deletedAt) return null;
+    return current;
   } catch (error) {
     console.error("session_unavailable", error instanceof Error ? error.name : "unknown");
     return null;

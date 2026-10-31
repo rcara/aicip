@@ -69,3 +69,12 @@ npm run test:e2e
 ## Scénario et données
 
 `npm run db:seed` publie la version 1 du scénario pilote si son empreinte est nouvelle. Une version déjà publiée n'est pas réécrite : un trigger PostgreSQL refuse la mutation du contenu publié. Rejouer une tentative crée une nouvelle branche et conserve l'originale.
+
+Le compte (page `/compte`) garde l'historique, l'export JSON et la suppression. Les tentatives sans compte restent sur le navigateur et ne sont pas fusionnées à la connexion. `ACCOUNT_RETENTION_DAYS` (défaut 365) borne la conservation du journal de suppression.
+
+```bash
+npm run admin:grant -- learner@example.com
+npm run account:purge
+```
+
+`admin:grant` n'accepte qu'un compte déjà créé. Aucun mot de passe d'administrateur n'est semé.
