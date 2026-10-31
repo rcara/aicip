@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "difficult-feedback-it-001",
+  "slug": "entretien-difficile-technicien-it",
+  "version": 1,
+  "title": "Entretien difficile avec un technicien IT",
+  "durationMinutes": 10,
+  "difficulty": "intermediate",
+  "audience": "Responsables et futurs responsables d'équipes IT",
+  "objective": "Conduire une discussion constructive sur des retards de traitement sans perdre la clarté des attentes.",
+  "disclaimer": "Simulation pédagogique volontaire ; ne constitue pas une évaluation RH.",
+  "briefing": "Vous dirigez une équipe support. Alex accumule des retards de tickets prioritaires. Plusieurs collègues se plaignent d'interruptions. Vous devez comprendre les difficultés et trouver des engagements concrets.",
+  "competencies": [
+    {"id":"active_listening","label":"Écoute active","weight":20},
+    {"id":"fact_based_feedback","label":"Retour factuel","weight":25},
+    {"id":"empathy","label":"Empathie professionnelle","weight":15},
+    {"id":"clarity","label":"Clarté des attentes","weight":20},
+    {"id":"action_plan","label":"Plan d'action","weight":20}
+  ],
+  "initialNodeId": "intro",
+  "nodes": [
+    {
+      "id":"intro","type":"dialogue","speaker":"Alex","text":"Je ne comprends pas pourquoi tu me reproches les retards. On est tous débordés et personne ne m'aide !","nextNodeId":"d1"
+    },
+    {
+      "id":"d1","type":"decision","speaker":"Narrateur","text":"Quelle est votre première réaction ?",
+      "choices":[
+        {"id":"d1_a","label":"Je comprends que la charge soit forte. Peux-tu me dire ce qui a bloqué sur les tickets A et B ?","nextNodeId":"d2_cooperative","evidence":"Écoute et faits spécifiques ; pas d'accusation.","effects":{"active_listening":3,"fact_based_feedback":4,"empathy":3,"clarity":2,"action_plan":0}},
+        {"id":"d1_b","label":"Ce n'est pas une excuse. Les délais doivent être tenus, point final.","nextNodeId":"d2_defensive","evidence":"Le rappel de norme sans exploration risque de fermer la discussion.","effects":{"active_listening":0,"fact_based_feedback":1,"empathy":0,"clarity":2,"action_plan":0}},
+        {"id":"d1_c","label":"Je vois que tu es frustré. Qu'est-ce qui te met le plus en difficulté ?","nextNodeId":"d2_cooperative","evidence":"Bonne ouverture, mais les faits et critères devront être précisés.","effects":{"active_listening":4,"fact_based_feedback":1,"empathy":4,"clarity":1,"action_plan":0}}
+      ]
+    },
+    {
+      "id":"d2_cooperative","type":"dialogue","speaker":"Alex","text":"J'ai traité plusieurs urgences non planifiées. Je n'ai pas su quelle priorité donner aux tickets importants.","nextNodeId":"d2"
+    },
+    {
+      "id":"d2_defensive","type":"dialogue","speaker":"Alex","text":"D'accord... si c'est juste pour me dire que je ne fais pas assez, je n'ai rien à ajouter.","nextNodeId":"d2"
+    },
+    {
+      "id":"d2","type":"decision","speaker":"Narrateur","text":"Comment clarifiez-vous les attentes ?",
+      "choices":[
+        {"id":"d2_a","label":"Reprenons ensemble les priorités de la semaine et définissons un seuil d'alerte en cas de blocage.","nextNodeId":"d3_positive","evidence":"Critères explicites et soutien opérationnel.","effects":{"active_listening":2,"fact_based_feedback":3,"empathy":2,"clarity":4,"action_plan":3}},
+        {"id":"d2_b","label":"Tu dois simplement mieux t'organiser à l'avenir.","nextNodeId":"d3_frustrated","evidence":"La formule reste vague et ne donne aucune méthode.","effects":{"active_listening":0,"fact_based_feedback":0,"empathy":0,"clarity":1,"action_plan":0}},
+        {"id":"d2_c","label":"Je peux redistribuer tous tes tickets, nous verrons plus tard.","nextNodeId":"d3_frustrated","evidence":"Soutien immédiat sans clarification de responsabilité ni prévention.","effects":{"active_listening":2,"fact_based_feedback":0,"empathy":3,"clarity":0,"action_plan":1}}
+      ]
+    },
+    {"id":"d3_positive","type":"dialogue","speaker":"Alex","text":"Ça m'aiderait. Je peux t'alerter si une urgence entre et qu'elle risque de faire glisser un ticket prioritaire.","nextNodeId":"d3"},
+    {"id":"d3_frustrated","type":"dialogue","speaker":"Alex","text":"Je peux essayer, mais je ne vois pas concrètement comment éviter que ça recommence.","nextNodeId":"d3"},
+    {
+      "id":"d3","type":"decision","speaker":"Narrateur","text":"Comment concluez-vous cet entretien ?",
+      "choices":[
+        {"id":"d3_a","label":"Fixons deux priorités, un point de contrôle vendredi et la règle d'alerte en cas de surcharge.","nextNodeId":"ending_constructive","evidence":"Engagements mesurables, échéance et responsabilité partagée.","effects":{"active_listening":1,"fact_based_feedback":2,"empathy":2,"clarity":4,"action_plan":4}},
+        {"id":"d3_b","label":"Très bien, j'espère que la situation va s'améliorer.","nextNodeId":"ending_unclear","evidence":"Fin courtoise mais sans engagement ni suivi.","effects":{"active_listening":1,"fact_based_feedback":0,"empathy":2,"clarity":0,"action_plan":0}}
+      ]
+    },
+    {"id":"ending_constructive","type":"ending","speaker":"Narrateur","text":"Vous terminez avec une compréhension plus claire du problème et un plan de suivi observable.","outcome":"constructive"},
+    {"id":"ending_unclear","type":"ending","speaker":"Narrateur","text":"La tension est peut-être retombée, mais le risque de répétition demeure faute d'un plan concret.","outcome":"unclear"}
+  ],
+  "feedback": {
+    "scoringHint": "Les effets 0-4 par compétence sont des contributions pédagogiques par décision, pas des scores d'aptitude individuelle. Calculer un indicateur 0-100 en agrégeant les choix effectivement traversés et en normalisant par les poids ; documenter la règle exacte et tester la reproductibilité.",
+    "coachGuidelines": [
+      "Citer des décisions concrètes avant une recommandation.",
+      "Expliquer ce qui est amélioré et ce qui reste incomplet.",
+      "Éviter de faire des déductions sur la personnalité ou la valeur professionnelle.",
+      "Proposer un plan de transfert pratique au prochain entretien."
+    ]
+  }
+}
