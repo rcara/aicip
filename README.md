@@ -78,3 +78,5 @@ npm run account:purge
 ```
 
 `admin:grant` n'accepte qu'un compte déjà créé. Aucun mot de passe d'administrateur n'est semé.
+
+`docs/OPERATIONS.md` décrit une préproduction possible. Ce n'est pas une autorisation de déploiement. Playwright couvre Chromium, Chrome mobile et WebKit. Safari iOS et Android réels restent une vérification manuelle.

@@ -129,6 +129,7 @@ export const attempts = pgTable(
     status: text("status").notNull(),
     finalScore: integer("final_score"),
     transferNote: text("transfer_note"),
+    reflectionNote: text("reflection_note"),
     startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
     completedAt: timestamp("completed_at", { withTimezone: true }),
     expiresAt: timestamp("expires_at", { withTimezone: true }),
@@ -177,6 +178,13 @@ export const analyticsEvents = pgTable(
   (table) => [index("analytics_kind_created_idx").on(table.kind, table.createdAt)],
 );
 
+export const interestSignups = pgTable("interest_signups", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull(),
+  message: text("message"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const deletionJournal = pgTable(
   "deletion_journal",
   {
@@ -192,6 +200,7 @@ export const deletionJournal = pgTable(
 export const aiUsage = pgTable("ai_usage", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: text("user_id"),
+  anonymousId: text("anonymous_id"),
   requestType: text("request_type").notNull(),
   provider: text("provider").notNull(),
   model: text("model").notNull(),

@@ -1,4 +1,4 @@
-import { and, count, desc, eq, inArray, isNotNull, isNull, lt, sql } from "drizzle-orm";
+import { and, count, desc, eq, gte, inArray, isNotNull, isNull, lt, sql } from "drizzle-orm";
 
 import { accountRetentionDays } from "@/lib/config";
 import { AppError, isUniqueViolation } from "@/lib/errors";
@@ -25,6 +25,7 @@ import {
   attemptEvents,
   attempts,
   deletionJournal,
+  interestSignups,
   scenarioVersions,
   scenarios,
   session,
@@ -421,13 +422,57 @@ export async function recordAnalytics(input: {
   }
 }
 
-export async function recordAiUsage(input: { actor: Actor; status: "ok" | "fallback" | "error" }) {
+export async function saveReflection(attemptId: string, actor: Actor, note: string) {
+  const before = await getOwnedAttempt(attemptId, actor);
+  const trimmed = note.trim().slice(0, 500);
+  await getDb()
+    .update(attempts)
+    .set({ reflectionNote: trimmed.length ? trimmed : null })
+    .where(eq(attempts.id, attemptId));
+  const after = await getOwnedAttempt(attemptId, actor);
+  if (
+    after.state.currentNodeId !== before.state.currentNodeId ||
+    after.state.events.length !== before.state.events.length ||
+    after.row.finalScore !== before.row.finalScore
+  ) {
+    throw new Error("La réponse libre a modifié le parcours.");
+  }
+  return after.row.reflectionNote;
+}
+
+export async function countAiUsageToday(actor: Actor): Promise<{ actorCount: number; globalCount: number }> {
+  const start = new Date();
+  start.setUTCHours(0, 0, 0, 0);
+  const db = getDb();
+  const globalRows = await db.select({ value: count() }).from(aiUsage).where(gte(aiUsage.createdAt, start));
+  const actorFilter = actor.userId
+    ? eq(aiUsage.userId, actor.userId)
+    : actor.anonymousTokenHash
+      ? eq(aiUsage.anonymousId, actor.anonymousTokenHash)
+      : sql`false`;
+  const actorRows = await db
+    .select({ value: count() })
+    .from(aiUsage)
+    .where(and(gte(aiUsage.createdAt, start), actorFilter));
+  return {
+    actorCount: Number(actorRows[0]?.value ?? 0),
+    globalCount: Number(globalRows[0]?.value ?? 0),
+  };
+}
+
+export async function recordAiUsage(input: {
+  actor: Actor;
+  status: "ok" | "fallback" | "error";
+  provider: string;
+  model: string;
+}) {
   try {
     await getDb().insert(aiUsage).values({
       userId: input.actor.userId,
+      anonymousId: input.actor.userId ? null : input.actor.anonymousTokenHash,
       requestType: "debrief",
-      provider: "mock",
-      model: "mock-v1",
+      provider: input.provider,
+      model: input.model,
       status: input.status,
     });
   } catch (error) {
@@ -540,6 +585,7 @@ export async function exportAccount(actor: Actor) {
       status: attempts.status,
       finalScore: attempts.finalScore,
       transferNote: attempts.transferNote,
+      reflectionNote: attempts.reflectionNote,
       startedAt: attempts.startedAt,
       completedAt: attempts.completedAt,
       slug: scenarios.slug,
@@ -585,6 +631,7 @@ export async function exportAccount(actor: Actor) {
       status: row.status,
       exerciseIndicator: row.finalScore,
       transferNote: row.transferNote,
+      reflectionNote: row.reflectionNote,
       startedAt: row.startedAt.toISOString(),
       completedAt: row.completedAt?.toISOString() ?? null,
       events: events
@@ -675,12 +722,25 @@ export async function analyticsVolume() {
     .select({ value: count() })
     .from(attempts)
     .where(eq(attempts.status, "completed"));
+  const usage = await db
+    .select({ status: aiUsage.status, count: count() })
+    .from(aiUsage)
+    .groupBy(aiUsage.status);
+  const interest = await db.select({ value: count() }).from(interestSignups);
   return {
     accounts: Number(accounts[0]?.value ?? 0),
     attempts: Number(attemptRows[0]?.value ?? 0),
     completed: Number(completed[0]?.value ?? 0),
+    interest: Number(interest[0]?.value ?? 0),
     kinds: kinds.map((row) => ({ kind: row.kind, count: Number(row.count) })),
+    aiUsage: usage.map((row) => ({ status: row.status, count: Number(row.count) })),
   };
+}
+
+export async function saveInterest(email: string, message: string | null) {
+  const normalized = email.trim().toLowerCase();
+  const note = message?.trim().slice(0, 500) || null;
+  await getDb().insert(interestSignups).values({ email: normalized, message: note });
 }
 
 export async function publishedVersionIsImmutable(versionId: string): Promise<void> {

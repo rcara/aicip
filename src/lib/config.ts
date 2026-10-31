@@ -28,7 +28,45 @@ export function authBaseUrl(): string {
   return process.env.BETTER_AUTH_URL ?? "http://127.0.0.1:3000";
 }
 
+export function cookieSecure(): boolean {
+  return authBaseUrl().startsWith("https://");
+}
+
 const DEFAULT_RETENTION_DAYS = 365;
+
+export type RealCoachConfig = {
+  url: string;
+  apiKey: string;
+  model: string;
+  timeoutMs: number;
+  actorDailyLimit: number;
+  globalDailyLimit: number;
+};
+
+function boundedInt(raw: string | undefined, fallback: number, min: number, max: number): number {
+  if (!raw) return fallback;
+  const value = Number(raw);
+  if (!Number.isInteger(value) || value < min || value > max) return fallback;
+  return value;
+}
+
+export function getRealCoachConfig(): RealCoachConfig | null {
+  const url = process.env.AI_API_BASE_URL?.trim() ?? "";
+  const apiKey = process.env.AI_API_KEY?.trim() ?? "";
+  const model = process.env.AI_MODEL?.trim() ?? "";
+  if (!url || !apiKey || !model) return null;
+  if (!url.startsWith("https://") && !url.startsWith("http://127.0.0.1") && !url.startsWith("http://localhost")) {
+    return null;
+  }
+  return {
+    url,
+    apiKey,
+    model,
+    timeoutMs: boundedInt(process.env.AI_TIMEOUT_MS, 8000, 1000, 30000),
+    actorDailyLimit: boundedInt(process.env.AI_ACTOR_DAILY_LIMIT, 20, 1, 200),
+    globalDailyLimit: boundedInt(process.env.AI_GLOBAL_DAILY_LIMIT, 200, 1, 5000),
+  };
+}
 
 export function accountRetentionDays(): number {
   const raw = process.env.ACCOUNT_RETENTION_DAYS;

@@ -15,6 +15,20 @@
       "when": 1793475600000,
       "tag": "0001_account_deletion",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793479200000,
+      "tag": "0002_reflection_and_ai_usage",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1793482800000,
+      "tag": "0003_interest_signups",
+      "breakpoints": true
     }
   ]
 }

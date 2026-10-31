@@ -1,52 +1,43 @@
-import { z } from "zod";
-
+import type { RealCoachConfig } from "@/lib/config";
 import type { Feedback } from "@/modules/learning/feedback";
+import {
+  buildCoachContext,
+  questionIsInjection,
+  type CoachContext,
+} from "@/modules/ai-coach/context";
+import { fetchCoachTransport, requestCoach, type CoachTransport } from "@/modules/ai-coach/http";
+import { coachOutputSchema, type CoachOutput } from "@/modules/ai-coach/output";
 
-export const coachOutputSchema = z.object({
-  summary: z.string().max(500),
-  strengths: z
-    .array(
-      z.object({
-        competencyId: z.string().max(64),
-        evidence: z.string().max(500),
-        comment: z.string().max(500),
-      }),
-    )
-    .max(3),
-  improvements: z
-    .array(
-      z.object({
-        competencyId: z.string().max(64),
-        evidence: z.string().max(500),
-        suggestion: z.string().max(500),
-      }),
-    )
-    .max(3),
-  alternativeReply: z.string().max(500),
-  reflectionQuestion: z.string().max(300),
-  uncertain: z.boolean(),
-});
-
-export type CoachOutput = z.infer<typeof coachOutputSchema>;
+export { coachOutputSchema, type CoachOutput };
 
 export type CoachRequest = {
   feedback: Feedback;
+  briefing?: string;
+  objective?: string;
+  guidelines?: string[];
   question?: string;
+  reflectionNote?: string;
 };
+
+export type CoachSource = "mock" | "fallback" | "real";
 
 export type CoachResult = {
   output: CoachOutput;
-  source: "mock" | "fallback";
+  source: CoachSource;
+  provider: string;
+  model: string;
   certifying: false;
+};
+
+export type CoachUsage = {
+  actorCount: number;
+  globalCount: number;
 };
 
 export interface AiCoachProvider {
   readonly id: "mock" | "real";
   coach(request: CoachRequest): Promise<CoachOutput>;
 }
-
-const INJECTION =
-  /ignore (all |previous |tes )?instructions|system prompt|oublie (les |tes )?instructions|note maximale|set the score|change (the )?score|nextnodeid/i;
 
 function clip(value: string, max: number): string {
   const trimmed = value.replace(/\s+/g, " ").trim();
@@ -106,37 +97,58 @@ export class MockAiCoach implements AiCoachProvider {
         "Qu'est-ce que vous testerez, mot pour mot, lors de votre prochain point avec l'équipe ?",
         300,
       ),
-      uncertain: Boolean(request.question && INJECTION.test(request.question)),
+      uncertain: questionIsInjection(request.question),
     };
     return coachOutputSchema.parse(output);
   }
 }
 
-export class RealAiCoachDisabled implements AiCoachProvider {
-  readonly id = "real" as const;
-
-  async coach(): Promise<CoachOutput> {
-    throw new Error("REAL_AI_DISABLED");
-  }
+export function quotaAllows(usage: CoachUsage, config: RealCoachConfig): boolean {
+  return usage.actorCount < config.actorDailyLimit && usage.globalCount < config.globalDailyLimit;
 }
 
-export async function runCoach(request: CoachRequest, mode: "mock" | "off" | "real"): Promise<CoachResult | null> {
+export async function runCoach(
+  request: CoachRequest,
+  mode: "mock" | "off" | "real",
+  options?: {
+    config?: RealCoachConfig | null;
+    usage?: CoachUsage;
+    transport?: CoachTransport;
+  },
+): Promise<CoachResult | null> {
   if (mode === "off") return null;
   const mock = new MockAiCoach();
-  if (mode === "real") {
-    try {
-      await new RealAiCoachDisabled().coach();
-    } catch {
-      return {
-        output: await mock.coach(request),
-        source: "fallback",
-        certifying: false,
-      };
-    }
-  }
-  return {
+  const mocked = async (source: "mock" | "fallback"): Promise<CoachResult> => ({
     output: await mock.coach(request),
-    source: "mock",
+    source,
+    provider: "mock",
+    model: "mock-v1",
     certifying: false,
-  };
+  });
+  if (mode !== "real") return mocked("mock");
+  const config = options?.config ?? null;
+  if (!config) return mocked("fallback");
+  const usage = options?.usage ?? { actorCount: 0, globalCount: 0 };
+  if (!quotaAllows(usage, config)) return mocked("fallback");
+  try {
+    const context: CoachContext = buildCoachContext(request);
+    const output = await requestCoach({
+      url: config.url,
+      apiKey: config.apiKey,
+      model: config.model,
+      timeoutMs: config.timeoutMs,
+      context,
+      transport: options?.transport ?? fetchCoachTransport,
+    });
+    if (questionIsInjection(request.question)) output.uncertain = true;
+    return {
+      output,
+      source: "real",
+      provider: "operator-http",
+      model: config.model,
+      certifying: false,
+    };
+  } catch {
+    return mocked("fallback");
+  }
 }

@@ -28,7 +28,7 @@ export default async function AdminPage({
     <section className="max-w-3xl">
       <h1 className="font-serif text-5xl tracking-tight">{messages.admin.title}</h1>
       <p className="mt-3 text-sm text-ink-soft">{current?.email}</p>
-      <dl className="mt-8 grid gap-4 sm:grid-cols-3">
+      <dl className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-3xl border border-line p-4">
           <dt className="text-sm text-ink-soft">{messages.admin.accounts}</dt>
           <dd className="font-serif text-4xl">{volume.accounts}</dd>
@@ -41,7 +41,21 @@ export default async function AdminPage({
           <dt className="text-sm text-ink-soft">{messages.admin.completed}</dt>
           <dd className="font-serif text-4xl">{volume.completed}</dd>
         </div>
+        <div className="rounded-3xl border border-line p-4">
+          <dt className="text-sm text-ink-soft">{messages.admin.interest}</dt>
+          <dd className="font-serif text-4xl">{volume.interest}</dd>
+        </div>
       </dl>
+      <h2 className="mt-10 font-serif text-2xl">{messages.admin.aiUsage}</h2>
+      <ul className="mt-3 divide-y divide-line rounded-3xl border border-line">
+        {volume.aiUsage.length === 0 ? <li className="px-4 py-3 text-ink-soft">0</li> : null}
+        {volume.aiUsage.map((item) => (
+          <li key={item.status} className="flex items-center justify-between px-4 py-3">
+            <span>{item.status}</span>
+            <span>{item.count}</span>
+          </li>
+        ))}
+      </ul>
       <h2 className="mt-10 font-serif text-2xl">{messages.admin.kinds}</h2>
       <ul className="mt-3 divide-y divide-line rounded-3xl border border-line">
         {ANALYTICS_KINDS.map((kind) => (

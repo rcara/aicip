@@ -71,3 +71,21 @@ L'export JSON contient le compte demandeur, ses tentatives, les identifiants de 
 La suppression exige la phrase « supprimer mon compte » ou « delete my account ». Elle efface les tentatives du compte et les sessions, retire le mot de passe, pose `deleted_at`, et écrit `deletion_journal` avec des compteurs seulement. Les versions de scénario ne sont pas modifiées. `ACCOUNT_RETENTION_DAYS` vaut 365 par défaut (borné de 1 à 3650). `npm run account:purge` retire ensuite les journaux et les lignes de compte plus anciens. `npm run admin:grant` attribue `admin` à un compte existant et n'en crée pas.
 
 L'administration affiche des volumes (comptes, tentatives, kinds) sans liste d'adresses et sans texte de dialogue. Publier passe par `seedScenario` : même empreinte, aucun changement ; même numéro avec un autre contenu, refus avant même le trigger.
+
+## Coach borné (Sprint 3)
+
+Le mode par défaut reste `mock`. Le mode `real` n'appelle le réseau que si `AI_API_BASE_URL`, `AI_API_KEY` et `AI_MODEL` sont définis côté serveur. L'URL doit être `https` ou un hôte local : le dépôt ne choisit aucun fournisseur ni domaine. Le contexte envoyé est le briefing, l'objectif, la rubrique, les choix de cette tentative et le texte facultatif de l'apprenant. Pas d'autre tentative, pas de profil.
+
+La sortie passe par Zod, avec des longueurs maximales. Un texte d'injection ou un `nextNodeId` est retiré et marque `uncertain`. Quota journalier par acteur (20) et global (200), délai 8 secondes. Au-delà, ou si l'appel échoue, le mock répond avec `source: "fallback"` et `certifying: false`. `ai_usage` enregistre le fournisseur, le modèle et le statut, pas le prompt.
+
+La réponse libre est une colonne `reflection_note`. Elle ne crée pas d'événement de graphe et ne change pas le nœud courant. Le choix suivant reste `commitChoice`.
+
+## Pilote local (Sprint 4)
+
+Playwright lance le même parcours sur Chromium, Chrome mobile (Pixel 5) et WebKit, un projet à la fois. better-auth limite les inscriptions à 3 requêtes par 10 secondes pour une même adresse. Le test de compte attend le délai annoncé au lieu d'élever ce plafond. Cela ne remplace pas un Safari iOS ou un Android réel.
+
+Les cookies `aicip_demo`, `aicip_locale` et de session ne portent `Secure` que si `BETTER_AUTH_URL` commence par `https://`. `next start` pose `NODE_ENV=production` même en HTTP local. WebKit refuse alors un cookie `Secure` sur `http://127.0.0.1`, et la tentative anonyme devient introuvable.
+
+Le formulaire d'intérêt est une table séparée, sans indicateur et sans lien vers une tentative. L'administration en montre le nombre, plus les statuts de `ai_usage` et les kinds déjà comptés, dont `replay_started`.
+
+`docs/OPERATIONS.md` fixe la procédure d'arrêt, de sauvegarde et de retour arrière pour une préproduction qui n'est pas lancée par ce dépôt. La CI ne déploie pas.
