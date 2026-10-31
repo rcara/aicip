@@ -12,6 +12,7 @@ import {
   createAttempt,
   getOwnedAttempt,
   publishedVersionIsImmutable,
+  saveReflection,
 } from "@/db/repository";
 import { attemptEvents, attempts, scenarioVersions } from "@/db/schema";
 import { contentHash } from "@/modules/scenarios/hash";
@@ -60,6 +61,19 @@ describe("persisted attempts", () => {
       .from(attemptEvents)
       .where(eq(attemptEvents.attemptId, started.state.id));
     expect(rows.filter((row) => row.eventType === "choice_committed")).toHaveLength(1);
+  });
+
+  it("stores a free reply without moving the node or the score", async () => {
+    const started = await reachFirstDecision(actorA);
+    const before = await getOwnedAttempt(started.state.id, actorA);
+    const note = await saveReflection(started.state.id, actorA, "Je nommerais le ticket A, puis une date.");
+    const after = await getOwnedAttempt(started.state.id, actorA);
+    expect(note).toBe("Je nommerais le ticket A, puis une date.");
+    expect(after.state.currentNodeId).toBe(before.state.currentNodeId);
+    expect(after.state.events).toHaveLength(before.state.events.length);
+    expect(after.row.finalScore).toBe(before.row.finalScore);
+    const chosen = await applyChoice(started.state.id, actorA, "d1_a", crypto.randomUUID());
+    expect(chosen.state.currentNodeId).toBe("d2_cooperative");
   });
 
   it("hides an attempt from another actor", async () => {

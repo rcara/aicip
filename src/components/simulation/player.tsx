@@ -45,10 +45,11 @@ type AttemptView = {
     parentIndicator: number | null;
     currentIndicator: number | null;
   } | null;
+  reflectionNote: string | null;
 };
 
 type CoachView = {
-  source: "mock" | "fallback";
+  source: "mock" | "fallback" | "real";
   certifying: false;
   output: {
     summary: string;
@@ -101,6 +102,8 @@ export function SimulationPlayer({
   const [coach, setCoach] = useState<CoachView | null>(initialCoach);
   const [note, setNote] = useState("");
   const [saved, setSaved] = useState(false);
+  const [reflection, setReflection] = useState(initialAttempt?.reflectionNote ?? "");
+  const [reflectionSaved, setReflectionSaved] = useState(Boolean(initialAttempt?.reflectionNote));
 
   const loadCoach = async (id: string) => {
     const response = await fetch(`/api/v1/attempts/${id}/coach`, {
@@ -169,6 +172,25 @@ export function SimulationPlayer({
     setCoach(null);
     setAttempt(body.attempt);
     router.replace(`/demo/${slug}?attempt=${body.attempt.id}`);
+  }
+
+  async function saveReflection() {
+    if (!attempt) return;
+    setPending(true);
+    setError(null);
+    const response = await fetch(`/api/v1/attempts/${attempt.id}/reflection`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ note: reflection }),
+    });
+    const body = await readJson(response);
+    setPending(false);
+    if (!response.ok || !body.attempt) {
+      setError(body.error?.message ?? messages.player.error);
+      return;
+    }
+    setAttempt(body.attempt);
+    setReflectionSaved(true);
   }
 
   async function saveNote() {
@@ -312,6 +334,35 @@ export function SimulationPlayer({
               </form>
             ) : null}
 
+            {attempt.current?.type === "decision" ? (
+              <div className="mt-6">
+                <label className="block text-sm font-semibold" htmlFor="reflection-note">
+                  {messages.player.reflection}
+                </label>
+                <p className="mt-1 text-sm text-ink-soft">{messages.player.reflectionHelp}</p>
+                <textarea
+                  className="mt-2 w-full rounded-2xl border border-line bg-white p-3"
+                  id="reflection-note"
+                  maxLength={500}
+                  rows={3}
+                  value={reflection}
+                  onChange={(event) => {
+                    setReflection(event.target.value);
+                    setReflectionSaved(false);
+                  }}
+                />
+                <button
+                  className="mt-2 rounded-full border border-ink px-4 py-2 disabled:opacity-60"
+                  disabled={pending}
+                  type="button"
+                  onClick={() => void saveReflection()}
+                >
+                  {messages.player.reflectionSave}
+                </button>
+                {reflectionSaved ? <p className="mt-2 text-sm text-pine">{messages.player.reflectionSaved}</p> : null}
+              </div>
+            ) : null}
+
             {attempt.debrief ? (
               <div className="mt-8 border-t border-line pt-6">
                 <h2 className="font-serif text-3xl">{messages.player.debrief}</h2>
@@ -404,8 +455,13 @@ export function SimulationPlayer({
                   <div className="mt-6 rounded-2xl border border-line p-4">
                     <h3 className="font-semibold">{messages.player.coach}</h3>
                     <p className="mt-1 text-sm text-ink-soft">
-                      {coach.source === "fallback" ? messages.player.coachFallback : messages.player.coachMock}
+                      {coach.source === "real"
+                        ? messages.player.coachReal
+                        : coach.source === "fallback"
+                          ? messages.player.coachFallback
+                          : messages.player.coachMock}
                     </p>
+                    <p className="mt-2 text-sm text-ink-soft">{messages.player.coachBuiltText}</p>
                     <p className="mt-3">{coach.output.summary}</p>
                     {coach.output.improvements[0] ? (
                       <p className="mt-3">{coach.output.improvements[0].suggestion}</p>

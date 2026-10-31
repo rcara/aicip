@@ -3,7 +3,10 @@ import { projectAttempt, type AttemptProjection } from "@/modules/simulation/pro
 import type { Scenario } from "@/modules/scenarios/schema";
 import type { AttemptState } from "@/modules/simulation/engine";
 
+import { getDb } from "@/db/client";
 import { getOwnedAttempt } from "@/db/repository";
+import { attempts } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import type { Actor } from "@/modules/identity/actor";
 
 export type PublicAttempt = AttemptProjection & {
@@ -15,6 +18,7 @@ export type PublicAttempt = AttemptProjection & {
     parentIndicator: number | null;
     currentIndicator: number | null;
   } | null;
+  reflectionNote: string | null;
 };
 
 export function presentScenario(input: { slug: string; scenario: Scenario }) {
@@ -57,11 +61,17 @@ export async function presentAttempt(input: {
       comparison = null;
     }
   }
+  const note = await getDb()
+    .select({ reflectionNote: attempts.reflectionNote })
+    .from(attempts)
+    .where(eq(attempts.id, input.state.id))
+    .limit(1);
   return {
     ...projection,
     scenarioSlug: input.slug,
     scenarioTitle: input.scenario.title,
     disclaimer: input.scenario.disclaimer,
     comparison,
+    reflectionNote: note[0]?.reflectionNote ?? null,
   };
 }
