@@ -51,6 +51,9 @@ export default async function HomePage({
             >
               {messages.hero.secondary}
             </a>
+            <a className="inline-flex justify-center rounded-full border border-line px-5 py-3" href="/explain">
+              {messages.hero.studio}
+            </a>
           </div>
         </div>
         <div className="rounded-3xl border border-line bg-paper-2 p-6">

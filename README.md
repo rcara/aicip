@@ -1,10 +1,48 @@
-# Interactive Soft Skills Academy
+# Aicip
 
-Simulation courte pour s'exercer aux conversations difficiles : pause, décision, rejeu, débriefing. L'interface est en français. Les chaînes d'interface existent aussi en anglais ; le scénario publié reste en français.
+Studio pour transformer un sujet en vidéo explicative animée. Le motion design est décrit par un document JSON, pas par une vidéo opaque. La spécification courante est dans `docs/PRODUCT_VISION_V2.md`.
 
-Ce dépôt est un monolithe Next.js. Le Sprint 1 se lance en local, sans modèle de langage externe. Aucun déploiement de production n'est prévu par ces commandes.
+La simulation de conversations difficiles reste dans le dépôt. Ce n'est plus le produit. Son ancien mode d'emploi est plus bas.
 
-Les spécifications produit sont dans `docs/` :
+## Studio
+
+La preuve locale n'appelle pas de modèle. Elle joue un storyboard déjà composé : la gestion d'un incident IT.
+
+```bash
+npm ci
+npm run motion:storyboard
+npm run dev
+```
+
+Ouvrir `http://127.0.0.1:3000/explain`.
+
+L'export MP4, un rendu à la fois, écrit `out/incident-it.mp4` (non versionné) :
+
+```bash
+npm run motion:render
+```
+
+`npm test` inclut `tests/unit/motion.test.ts`. `motion:storyboard` régénère les voix avec espeak-ng et réécrit le JSON. Ne pas lancer `compose.prod.yml`.
+
+## Documents courants
+
+- `docs/PRODUCT_VISION_V2.md`
+- `docs/PRODUCT_REQUIREMENTS_V2.md`
+- `docs/MVP_SCOPE_V2.md`
+- `docs/SYSTEM_ARCHITECTURE_V2.md`
+- `docs/AI_GENERATION_PIPELINE.md`
+- `docs/MOTION_DESIGN_ENGINE.md`
+- `docs/SCENE_SCHEMA_SPECIFICATION.md`
+- `docs/RENDERING_ARCHITECTURE.md`
+- `docs/INFRASTRUCTURE_CAPACITY_PLAN.md`
+- `docs/SECURITY_AND_COST_CONTROLS.md`
+- `docs/DEVELOPMENT_ROADMAP_V2.md`
+- `docs/MIGRATION_FROM_V1.md`
+- `docs/ACCEPTANCE_CRITERIA_V2.md`
+
+## Simulation historique
+
+Les spécifications d'origine restent dans `docs/` :
 
 - `docs/01_CAHIER_DES_CHARGES.md`
 - `docs/02_MVP_BACKLOG.md`

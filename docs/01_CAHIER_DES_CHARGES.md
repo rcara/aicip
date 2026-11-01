@@ -1,3 +1,5 @@
+> **Historique — vision abandonnée comme produit principal.** Le produit courant est [PRODUCT_VISION_V2.md](PRODUCT_VISION_V2.md). Ce document décrit la simulation, qui n'est plus le MVP.
+
 # Cahier des charges fonctionnel — Interactive Soft Skills Academy
 Version 1.0 — 31/10/2026 — statut : cadrage initial
 

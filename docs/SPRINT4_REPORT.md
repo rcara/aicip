@@ -1,3 +1,5 @@
+> **Rapport historique de la simulation.**
+
 # Rapport Sprint 4
 
 Branche `cursor/sprint-4-pilot-quality-9ea1`, basée sur `cursor/sprint-3-bounded-coach-9ea1`. Aucun déploiement. `compose.prod.yml` n'a pas été lancé.

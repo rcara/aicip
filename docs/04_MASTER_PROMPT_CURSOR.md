@@ -1,3 +1,5 @@
+> **Historique — ne pas suivre ce prompt pour le produit courant.** Les règles à jour sont [DEVELOPMENT_ROADMAP_V2.md](DEVELOPMENT_ROADMAP_V2.md) et `.cursor/rules/project.mdc`.
+
 # MASTER PROMPT CURSOR — Interactive Soft Skills Academy
 
 > À copier intégralement dans Cursor Agent, depuis la racine du dépôt de développement. Mettre aussi les fichiers 01, 02, 03 et 05 sous `docs/`. **Exécuter en priorité le Sprint 1**, produire preuve de fonctionnement et rapport avant les étapes suivantes.

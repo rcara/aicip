@@ -1,3 +1,5 @@
+> **Historique — vision abandonnée comme produit principal.** Le périmètre courant est [MVP_SCOPE_V2.md](MVP_SCOPE_V2.md). Ce backlog décrit la simulation, qui n'est plus le MVP.
+
 # MVP, backlog et plan de livraison — Interactive Soft Skills Academy
 Version 1.0 — 31/10/2026
 

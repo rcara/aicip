@@ -1,3 +1,5 @@
+> **Rapport historique de la simulation.**
+
 # Rapport Sprint 2
 
 Branche `cursor/sprint-2-account-privacy-9ea1`, basée sur `cursor/sprint-1-simulation-9ea1`. Aucun déploiement, aucun merge.
