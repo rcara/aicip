@@ -50,6 +50,65 @@ function boundedInt(raw: string | undefined, fallback: number, min: number, max:
   return value;
 }
 
+export type ExplainerMode = "mock" | "off" | "real";
+
+export function getExplainerMode(): ExplainerMode {
+  const value = process.env.EXPLAINER_MODE;
+  if (value === "off" || value === "real" || value === "mock") return value;
+  return "mock";
+}
+
+export type RealExplainerConfig = {
+  url: string;
+  apiKey: string;
+  model: string;
+  timeoutMs: number;
+};
+
+function isLocalHost(host: string): boolean {
+  return host === "localhost" || host === "127.0.0.1" || host === "::1";
+}
+
+function isBlockedHost(host: string): boolean {
+  if (host.includes(":")) return true;
+  const match = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/.exec(host);
+  if (!match) return false;
+  const parts = match.slice(1).map(Number);
+  if (parts.some((part) => part > 255)) return true;
+  const first = parts[0] ?? 0;
+  const second = parts[1] ?? 0;
+  if (first === 10 || first === 127 || first === 0) return true;
+  if (first === 169 && second === 254) return true;
+  if (first === 172 && second >= 16 && second <= 31) return true;
+  if (first === 192 && second === 168) return true;
+  return false;
+}
+
+export function getRealExplainerConfig(): RealExplainerConfig | null {
+  const url = process.env.EXPLAINER_API_BASE_URL?.trim() ?? "";
+  const apiKey = process.env.EXPLAINER_API_KEY?.trim() ?? "";
+  const model = process.env.EXPLAINER_MODEL?.trim() ?? "";
+  if (!url || !apiKey || !model) return null;
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return null;
+  }
+  if (parsed.username || parsed.password) return null;
+  if (isLocalHost(parsed.hostname)) {
+    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return null;
+  } else if (parsed.protocol !== "https:" || isBlockedHost(parsed.hostname)) {
+    return null;
+  }
+  return {
+    url,
+    apiKey,
+    model,
+    timeoutMs: boundedInt(process.env.EXPLAINER_TIMEOUT_MS, 12_000, 1000, 30_000),
+  };
+}
+
 export function getRealCoachConfig(): RealCoachConfig | null {
   const url = process.env.AI_API_BASE_URL?.trim() ?? "";
   const apiKey = process.env.AI_API_KEY?.trim() ?? "";

@@ -11,7 +11,7 @@
 | Changement de style et de texte de sous-titre | 1 | Fait, en mémoire |
 | Export MP4 | 1 | Script `npm run motion:render` |
 | Voix de production et temps de mots | 3 | Fixture espeak, sous-titre par segment |
-| Modèle de langage et PDF | 2 | Non |
+| Modèle de langage et PDF | 2 | Fait pour le mock, le PDF texte et le refus avant rendu. Fournisseur HTTP inactif sans variables. Voix réelle au sprint 3 |
 | File de rendu, objet S3, Redis | 3 | Non |
 | Comptes, quotas, paiement | 5 | L'auth v1 existe, elle n'est pas branchée au studio |
 

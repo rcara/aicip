@@ -20,11 +20,15 @@ Pas de modèle de langage.
 
 ## Sprint 2 — Génération
 
-- fournisseur de modèle, sortie Zod
-- plan, script, choix du modèle visuel
-- refus des documents invalides avant tout rendu
-- PDF texte extractible
+Fait dans cette branche. Le fournisseur mock est le défaut : aucun modèle externe, aucune clé.
+
+- sortie du modèle validée par Zod : plan, objectif, narration, choix d'un modèle du catalogue
+- la mise en page reste `layoutTemplate` ; le modèle ne fixe ni coordonnées, ni schéma, ni audio
+- un document invalide est refusé avant qu'un projet soit renvoyé au lecteur
+- PDF lu comme texte, côté serveur, taille bornée ; un PDF sans texte est refusé
 - français et anglais
+
+La voix, la file et l'export MP4 du film généré restent le sprint 3. L'aperçu généré utilise un silence d'une seconde. Le fournisseur HTTP reste inactif tant que `EXPLAINER_MODE=real` et que l'URL, la clé et le modèle ne sont pas définis ensemble.
 
 ## Sprint 3 — Film complet depuis un sujet
 

@@ -27,7 +27,9 @@ La voix neural Microsoft n'a pas été utilisée : le socket a répondu 403.
 | Rendu | secondes de CPU, et 0,01 USD Remotion par rendu réussi si la licence Automators s'applique |
 | Remotion société | minimum 100 USD / mois au-delà du gratuit |
 
-Plafonds prévus : durée 60–180 s au MVP, 24 scènes, taille de PDF, rendus par jour et par compte. Aucun plafond n'est encore branché sur le studio, parce qu'il ne consomme pas de modèle.
+Plafonds prévus : durée 60–180 s au MVP, 24 scènes, rendus par jour et par compte. Sprint 2 borne le PDF à 2 Mo, le texte extrait, le délai du fournisseur et 30 préparations par minute sur la route. Le compte et le quota d'usage restent le sprint 5. La route `/api/v1/explain` n'exige pas de session : ne pas l'exposer avec une clé réelle avant ces quotas.
+
+`EXPLAINER_API_KEY` reste dans l'environnement du serveur. Le studio ne le reçoit pas. Le PDF n'est pas téléchargé depuis une URL et n'est pas exécuté. Une sortie de modèle qui ajoute une clé, une coordonnée ou un modèle hors catalogue est rejetée par le schéma strict.
 
 ## Licence Remotion
 
