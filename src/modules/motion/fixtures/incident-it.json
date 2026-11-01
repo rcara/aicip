@@ -1,0 +1,1119 @@
+{
+  "id": "incident-it",
+  "version": 1,
+  "schemaVersion": 1,
+  "title": "Gestion des incidents IT",
+  "language": "fr",
+  "aspectRatio": "16:9",
+  "theme": "minimal-professional",
+  "fps": 30,
+  "width": 1280,
+  "height": 720,
+  "scenes": [
+    {
+      "id": "introduction",
+      "template": "title-introduction",
+      "title": "Introduction",
+      "narration": {
+        "text": "Un incident informatique, c'est un service qui ne tient plus sa promesse. Voici comment on le mène, de la déclaration jusqu'à la clôture.",
+        "audioSrc": "motion/incident/introduction.wav",
+        "durationMs": 8994,
+        "voice": "espeak-ng:fr"
+      },
+      "durationMs": 9394,
+      "durationInFrames": 282,
+      "transition": {
+        "type": "fade",
+        "durationMs": 240
+      },
+      "objects": [
+        {
+          "id": "accent-bar",
+          "type": "bar",
+          "x": 64,
+          "y": 210,
+          "width": 96,
+          "height": 8,
+          "fontSize": 22,
+          "appearAtMs": 0,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "kicker",
+          "type": "text",
+          "x": 64,
+          "y": 232,
+          "width": 1000,
+          "height": 40,
+          "text": "Gestion des incidents IT",
+          "fontSize": 22,
+          "appearAtMs": 80,
+          "animation": "fade-up",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "headline",
+          "type": "text",
+          "x": 64,
+          "y": 284,
+          "width": 1080,
+          "height": 140,
+          "text": "De la déclaration à la clôture",
+          "fontSize": 64,
+          "appearAtMs": 200,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "lede",
+          "type": "text",
+          "x": 64,
+          "y": 450,
+          "width": 980,
+          "height": 110,
+          "text": "Un service interrompu suit un chemin visible, du signal jusqu'au retour à la normale.",
+          "fontSize": 28,
+          "appearAtMs": 520,
+          "animation": "fade-up",
+          "tone": "muted",
+          "emphasis": false
+        }
+      ],
+      "subtitles": [
+        {
+          "id": "introduction-cue-1",
+          "text": "Un incident informatique, c'est un service qui ne tient plus sa promesse. Voici comment on le mène, de la déclaration jusqu'à la clôture.",
+          "startMs": 0,
+          "endMs": 8994,
+          "source": "segment"
+        }
+      ]
+    },
+    {
+      "id": "declaration",
+      "template": "process-flow",
+      "title": "Déclarer",
+      "narration": {
+        "text": "Tout commence par un signal. Une personne, une sonde ou un collègue décrit ce qui est cassé, depuis quand, et qui est touché. On le déclare, sans attendre la solution.",
+        "audioSrc": "motion/incident/declaration.wav",
+        "durationMs": 11354,
+        "voice": "espeak-ng:fr"
+      },
+      "durationMs": 11754,
+      "durationInFrames": 353,
+      "transition": {
+        "type": "fade",
+        "durationMs": 240
+      },
+      "objects": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 64,
+          "y": 48,
+          "width": 1040,
+          "height": 56,
+          "text": "Déclarer, puis avancer",
+          "fontSize": 36,
+          "appearAtMs": 0,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "step-1",
+          "type": "node",
+          "x": 64,
+          "y": 250,
+          "width": 155,
+          "height": 180,
+          "text": "Déclarer",
+          "fontSize": 22,
+          "appearAtMs": 160,
+          "animation": "fade-up",
+          "tone": "accent",
+          "emphasis": true
+        },
+        {
+          "id": "arrow-1",
+          "type": "arrow",
+          "x": 225,
+          "y": 332,
+          "width": 32,
+          "height": 8,
+          "fontSize": 22,
+          "appearAtMs": 280,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "step-2",
+          "type": "node",
+          "x": 263,
+          "y": 250,
+          "width": 155,
+          "height": 180,
+          "text": "Qualifier",
+          "fontSize": 22,
+          "appearAtMs": 300,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "arrow-2",
+          "type": "arrow",
+          "x": 424,
+          "y": 332,
+          "width": 32,
+          "height": 8,
+          "fontSize": 22,
+          "appearAtMs": 420,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "step-3",
+          "type": "node",
+          "x": 462,
+          "y": 250,
+          "width": 155,
+          "height": 180,
+          "text": "Prioriser",
+          "fontSize": 22,
+          "appearAtMs": 440,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "arrow-3",
+          "type": "arrow",
+          "x": 623,
+          "y": 332,
+          "width": 32,
+          "height": 8,
+          "fontSize": 22,
+          "appearAtMs": 560,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "step-4",
+          "type": "node",
+          "x": 661,
+          "y": 250,
+          "width": 155,
+          "height": 180,
+          "text": "Escalader",
+          "fontSize": 22,
+          "appearAtMs": 580,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "arrow-4",
+          "type": "arrow",
+          "x": 822,
+          "y": 332,
+          "width": 32,
+          "height": 8,
+          "fontSize": 22,
+          "appearAtMs": 700,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "step-5",
+          "type": "node",
+          "x": 860,
+          "y": 250,
+          "width": 155,
+          "height": 180,
+          "text": "Résoudre",
+          "fontSize": 22,
+          "appearAtMs": 720,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "arrow-5",
+          "type": "arrow",
+          "x": 1021,
+          "y": 332,
+          "width": 32,
+          "height": 8,
+          "fontSize": 22,
+          "appearAtMs": 840,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "step-6",
+          "type": "node",
+          "x": 1059,
+          "y": 250,
+          "width": 155,
+          "height": 180,
+          "text": "Clôturer",
+          "fontSize": 22,
+          "appearAtMs": 860,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        }
+      ],
+      "subtitles": [
+        {
+          "id": "declaration-cue-1",
+          "text": "Tout commence par un signal. Une personne, une sonde ou un collègue décrit ce qui est cassé, depuis quand, et qui est touché. On le déclare, sans attendre la solution.",
+          "startMs": 0,
+          "endMs": 11354,
+          "source": "segment"
+        }
+      ]
+    },
+    {
+      "id": "qualification",
+      "template": "comparison",
+      "title": "Qualifier",
+      "narration": {
+        "text": "Qualifier, c'est distinguer un incident d'une demande. L'incident dégrade un service déjà promis. La demande ajoute quelque chose de nouveau, et elle se planifie.",
+        "audioSrc": "motion/incident/qualification.wav",
+        "durationMs": 10481,
+        "voice": "espeak-ng:fr"
+      },
+      "durationMs": 10881,
+      "durationInFrames": 326,
+      "transition": {
+        "type": "fade",
+        "durationMs": 240
+      },
+      "objects": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 64,
+          "y": 48,
+          "width": 1040,
+          "height": 56,
+          "text": "Incident ou demande",
+          "fontSize": 36,
+          "appearAtMs": 0,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "left-panel",
+          "type": "panel",
+          "x": 64,
+          "y": 150,
+          "width": 540,
+          "height": 430,
+          "fontSize": 22,
+          "appearAtMs": 120,
+          "animation": "highlight",
+          "tone": "card",
+          "emphasis": true
+        },
+        {
+          "id": "left-title",
+          "type": "text",
+          "x": 92,
+          "y": 176,
+          "width": 484,
+          "height": 56,
+          "text": "Incident",
+          "fontSize": 32,
+          "appearAtMs": 200,
+          "animation": "fade-up",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "left-point-1",
+          "type": "text",
+          "x": 92,
+          "y": 260,
+          "width": 484,
+          "height": 72,
+          "text": "Un service déjà promis",
+          "fontSize": 24,
+          "appearAtMs": 320,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "left-point-2",
+          "type": "text",
+          "x": 92,
+          "y": 350,
+          "width": 484,
+          "height": 72,
+          "text": "Il est dégradé ou arrêté",
+          "fontSize": 24,
+          "appearAtMs": 440,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "left-point-3",
+          "type": "text",
+          "x": 92,
+          "y": 440,
+          "width": 484,
+          "height": 72,
+          "text": "On le rétablit",
+          "fontSize": 24,
+          "appearAtMs": 560,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "right-panel",
+          "type": "panel",
+          "x": 676,
+          "y": 150,
+          "width": 540,
+          "height": 430,
+          "fontSize": 22,
+          "appearAtMs": 280,
+          "animation": "highlight",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "right-title",
+          "type": "text",
+          "x": 704,
+          "y": 176,
+          "width": 484,
+          "height": 56,
+          "text": "Demande",
+          "fontSize": 32,
+          "appearAtMs": 360,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "right-point-1",
+          "type": "text",
+          "x": 704,
+          "y": 260,
+          "width": 484,
+          "height": 72,
+          "text": "Quelque chose de nouveau",
+          "fontSize": 24,
+          "appearAtMs": 480,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "right-point-2",
+          "type": "text",
+          "x": 704,
+          "y": 350,
+          "width": 484,
+          "height": 72,
+          "text": "Rien n'est cassé",
+          "fontSize": 24,
+          "appearAtMs": 600,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "right-point-3",
+          "type": "text",
+          "x": 704,
+          "y": 440,
+          "width": 484,
+          "height": 72,
+          "text": "On la planifie",
+          "fontSize": 24,
+          "appearAtMs": 720,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        }
+      ],
+      "subtitles": [
+        {
+          "id": "qualification-cue-1",
+          "text": "Qualifier, c'est distinguer un incident d'une demande. L'incident dégrade un service déjà promis. La demande ajoute quelque chose de nouveau, et elle se planifie.",
+          "startMs": 0,
+          "endMs": 10481,
+          "source": "segment"
+        }
+      ]
+    },
+    {
+      "id": "priorisation",
+      "template": "animated-chart",
+      "title": "Prioriser",
+      "narration": {
+        "text": "La priorité croise l'urgence et l'impact. Un écran lent pour une personne n'a pas le même poids qu'un service arrêté pour tous les clients.",
+        "audioSrc": "motion/incident/priorisation.wav",
+        "durationMs": 8169,
+        "voice": "espeak-ng:fr"
+      },
+      "durationMs": 8569,
+      "durationInFrames": 257,
+      "transition": {
+        "type": "fade",
+        "durationMs": 240
+      },
+      "objects": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 64,
+          "y": 48,
+          "width": 1040,
+          "height": 56,
+          "text": "L'impact change la priorité",
+          "fontSize": 36,
+          "appearAtMs": 0,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "unit",
+          "type": "text",
+          "x": 64,
+          "y": 112,
+          "width": 400,
+          "height": 32,
+          "text": "Ampleur touchée",
+          "fontSize": 18,
+          "appearAtMs": 80,
+          "animation": "fade-up",
+          "tone": "muted",
+          "emphasis": false
+        },
+        {
+          "id": "bar-1",
+          "type": "bar",
+          "x": 120,
+          "y": 414,
+          "width": 120,
+          "height": 56,
+          "fontSize": 22,
+          "appearAtMs": 180,
+          "animation": "grow",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "bar-label-1",
+          "type": "text",
+          "x": 110,
+          "y": 486,
+          "width": 168,
+          "height": 72,
+          "text": "Une personne",
+          "fontSize": 18,
+          "appearAtMs": 240,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "bar-2",
+          "type": "bar",
+          "x": 486,
+          "y": 302,
+          "width": 120,
+          "height": 168,
+          "fontSize": 22,
+          "appearAtMs": 320,
+          "animation": "grow",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "bar-label-2",
+          "type": "text",
+          "x": 476,
+          "y": 486,
+          "width": 168,
+          "height": 72,
+          "text": "Une équipe",
+          "fontSize": 18,
+          "appearAtMs": 380,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "bar-3",
+          "type": "bar",
+          "x": 852,
+          "y": 190,
+          "width": 120,
+          "height": 280,
+          "fontSize": 22,
+          "appearAtMs": 460,
+          "animation": "grow",
+          "tone": "accent",
+          "emphasis": true
+        },
+        {
+          "id": "bar-label-3",
+          "type": "text",
+          "x": 842,
+          "y": 486,
+          "width": 168,
+          "height": 72,
+          "text": "Tous les clients",
+          "fontSize": 18,
+          "appearAtMs": 520,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        }
+      ],
+      "subtitles": [
+        {
+          "id": "priorisation-cue-1",
+          "text": "La priorité croise l'urgence et l'impact. Un écran lent pour une personne n'a pas le même poids qu'un service arrêté pour tous les clients.",
+          "startMs": 0,
+          "endMs": 8169,
+          "source": "segment"
+        }
+      ]
+    },
+    {
+      "id": "escalade",
+      "template": "hierarchy-diagram",
+      "title": "Escalader",
+      "narration": {
+        "text": "Si l'équipe qui reçoit l'incident ne peut pas le résoudre, elle le transmet plus haut, avec le contexte. Le ticket ne disparaît pas entre deux niveaux.",
+        "audioSrc": "motion/incident/escalade.wav",
+        "durationMs": 9194,
+        "voice": "espeak-ng:fr"
+      },
+      "durationMs": 9594,
+      "durationInFrames": 288,
+      "transition": {
+        "type": "fade",
+        "durationMs": 240
+      },
+      "objects": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 64,
+          "y": 48,
+          "width": 1040,
+          "height": 56,
+          "text": "Le ticket monte, le contexte reste",
+          "fontSize": 36,
+          "appearAtMs": 0,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "root",
+          "type": "node",
+          "x": 430,
+          "y": 140,
+          "width": 420,
+          "height": 96,
+          "text": "Niveau 1",
+          "fontSize": 28,
+          "appearAtMs": 120,
+          "animation": "fade-up",
+          "tone": "accent",
+          "emphasis": true
+        },
+        {
+          "id": "link-1",
+          "type": "arrow",
+          "x": 362,
+          "y": 248,
+          "width": 8,
+          "height": 36,
+          "fontSize": 22,
+          "appearAtMs": 240,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "child-1",
+          "type": "node",
+          "x": 241,
+          "y": 300,
+          "width": 250,
+          "height": 180,
+          "text": "Niveau 2",
+          "fontSize": 24,
+          "appearAtMs": 320,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "link-2",
+          "type": "arrow",
+          "x": 636,
+          "y": 248,
+          "width": 8,
+          "height": 36,
+          "fontSize": 22,
+          "appearAtMs": 320,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "child-2",
+          "type": "node",
+          "x": 515,
+          "y": 300,
+          "width": 250,
+          "height": 180,
+          "text": "Niveau 3",
+          "fontSize": 24,
+          "appearAtMs": 440,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "link-3",
+          "type": "arrow",
+          "x": 910,
+          "y": 248,
+          "width": 8,
+          "height": 36,
+          "fontSize": 22,
+          "appearAtMs": 400,
+          "animation": "draw",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "child-3",
+          "type": "node",
+          "x": 789,
+          "y": 300,
+          "width": 250,
+          "height": 180,
+          "text": "Fournisseur",
+          "fontSize": 24,
+          "appearAtMs": 560,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        }
+      ],
+      "subtitles": [
+        {
+          "id": "escalade-cue-1",
+          "text": "Si l'équipe qui reçoit l'incident ne peut pas le résoudre, elle le transmet plus haut, avec le contexte. Le ticket ne disparaît pas entre deux niveaux.",
+          "startMs": 0,
+          "endMs": 9194,
+          "source": "segment"
+        }
+      ]
+    },
+    {
+      "id": "resolution",
+      "template": "timeline",
+      "title": "Résoudre",
+      "narration": {
+        "text": "Résoudre, c'est diagnostiquer, corriger ou contourner, puis vérifier que le symptôme a disparu pour les personnes touchées.",
+        "audioSrc": "motion/incident/resolution.wav",
+        "durationMs": 8053,
+        "voice": "espeak-ng:fr"
+      },
+      "durationMs": 8453,
+      "durationInFrames": 254,
+      "transition": {
+        "type": "fade",
+        "durationMs": 240
+      },
+      "objects": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 64,
+          "y": 48,
+          "width": 1040,
+          "height": 56,
+          "text": "Rétablir, puis vérifier",
+          "fontSize": 36,
+          "appearAtMs": 0,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "spine",
+          "type": "bar",
+          "x": 108,
+          "y": 150,
+          "width": 6,
+          "height": 420,
+          "fontSize": 22,
+          "appearAtMs": 80,
+          "animation": "grow",
+          "tone": "accent",
+          "emphasis": false
+        },
+        {
+          "id": "marker-1",
+          "type": "badge",
+          "x": 92,
+          "y": 178,
+          "width": 38,
+          "height": 38,
+          "text": "1",
+          "fontSize": 18,
+          "appearAtMs": 180,
+          "animation": "fade-up",
+          "tone": "accent",
+          "emphasis": true
+        },
+        {
+          "id": "event-1",
+          "type": "node",
+          "x": 168,
+          "y": 150,
+          "width": 980,
+          "height": 92,
+          "text": "Diagnostiquer — ce qui a changé",
+          "fontSize": 26,
+          "appearAtMs": 220,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "marker-2",
+          "type": "badge",
+          "x": 92,
+          "y": 288,
+          "width": 38,
+          "height": 38,
+          "text": "2",
+          "fontSize": 18,
+          "appearAtMs": 340,
+          "animation": "fade-up",
+          "tone": "accent",
+          "emphasis": true
+        },
+        {
+          "id": "event-2",
+          "type": "node",
+          "x": 168,
+          "y": 260,
+          "width": 980,
+          "height": 92,
+          "text": "Corriger — ou contourner",
+          "fontSize": 26,
+          "appearAtMs": 380,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "marker-3",
+          "type": "badge",
+          "x": 92,
+          "y": 398,
+          "width": 38,
+          "height": 38,
+          "text": "3",
+          "fontSize": 18,
+          "appearAtMs": 500,
+          "animation": "fade-up",
+          "tone": "accent",
+          "emphasis": true
+        },
+        {
+          "id": "event-3",
+          "type": "node",
+          "x": 168,
+          "y": 370,
+          "width": 980,
+          "height": 92,
+          "text": "Vérifier — le symptôme a disparu",
+          "fontSize": 26,
+          "appearAtMs": 540,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        }
+      ],
+      "subtitles": [
+        {
+          "id": "resolution-cue-1",
+          "text": "Résoudre, c'est diagnostiquer, corriger ou contourner, puis vérifier que le symptôme a disparu pour les personnes touchées.",
+          "startMs": 0,
+          "endMs": 8053,
+          "source": "segment"
+        }
+      ]
+    },
+    {
+      "id": "cloture",
+      "template": "key-takeaway",
+      "title": "Clôturer",
+      "narration": {
+        "text": "On clôture seulement quand le service est rétabli, la personne qui a déclaré est informée, et la trace reste utile pour la prochaine fois.",
+        "audioSrc": "motion/incident/cloture.wav",
+        "durationMs": 8464,
+        "voice": "espeak-ng:fr"
+      },
+      "durationMs": 8864,
+      "durationInFrames": 266,
+      "transition": {
+        "type": "fade",
+        "durationMs": 240
+      },
+      "objects": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 64,
+          "y": 48,
+          "width": 1040,
+          "height": 56,
+          "text": "Clôturer, ce n'est pas oublier",
+          "fontSize": 36,
+          "appearAtMs": 0,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "takeaway",
+          "type": "panel",
+          "x": 64,
+          "y": 140,
+          "width": 1152,
+          "height": 160,
+          "text": "Le service est rétabli, et quelqu'un le sait.",
+          "fontSize": 32,
+          "appearAtMs": 120,
+          "animation": "highlight",
+          "tone": "accent",
+          "emphasis": true
+        },
+        {
+          "id": "check-1",
+          "type": "node",
+          "x": 64,
+          "y": 340,
+          "width": 366,
+          "height": 200,
+          "text": "Service rétabli",
+          "fontSize": 26,
+          "appearAtMs": 300,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "check-2",
+          "type": "node",
+          "x": 454,
+          "y": 340,
+          "width": 366,
+          "height": 200,
+          "text": "Personne informée",
+          "fontSize": 26,
+          "appearAtMs": 460,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "check-3",
+          "type": "node",
+          "x": 844,
+          "y": 340,
+          "width": 366,
+          "height": 200,
+          "text": "Trace conservée",
+          "fontSize": 26,
+          "appearAtMs": 620,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        }
+      ],
+      "subtitles": [
+        {
+          "id": "cloture-cue-1",
+          "text": "On clôture seulement quand le service est rétabli, la personne qui a déclaré est informée, et la trace reste utile pour la prochaine fois.",
+          "startMs": 0,
+          "endMs": 8464,
+          "source": "segment"
+        }
+      ]
+    },
+    {
+      "id": "conclusion",
+      "template": "conclusion",
+      "title": "Conclusion",
+      "narration": {
+        "text": "Déclarer, qualifier, prioriser, escalader, résoudre, clôturer. Ce cycle rend le service visible, et il garde le calme dans l'équipe.",
+        "audioSrc": "motion/incident/conclusion.wav",
+        "durationMs": 10367,
+        "voice": "espeak-ng:fr"
+      },
+      "durationMs": 10767,
+      "durationInFrames": 323,
+      "transition": {
+        "type": "fade",
+        "durationMs": 240
+      },
+      "objects": [
+        {
+          "id": "title",
+          "type": "text",
+          "x": 64,
+          "y": 48,
+          "width": 1040,
+          "height": 56,
+          "text": "Un cycle, pas une surprise",
+          "fontSize": 36,
+          "appearAtMs": 0,
+          "animation": "fade-up",
+          "tone": "ink",
+          "emphasis": false
+        },
+        {
+          "id": "summary",
+          "type": "text",
+          "x": 64,
+          "y": 130,
+          "width": 1100,
+          "height": 100,
+          "text": "Chaque étape laisse une trace que la suivante peut lire.",
+          "fontSize": 28,
+          "appearAtMs": 120,
+          "animation": "fade-up",
+          "tone": "muted",
+          "emphasis": false
+        },
+        {
+          "id": "step-1",
+          "type": "badge",
+          "x": 64,
+          "y": 270,
+          "width": 360,
+          "height": 112,
+          "text": "1. Déclarer",
+          "fontSize": 26,
+          "appearAtMs": 240,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "step-2",
+          "type": "badge",
+          "x": 454,
+          "y": 270,
+          "width": 360,
+          "height": 112,
+          "text": "2. Qualifier",
+          "fontSize": 26,
+          "appearAtMs": 360,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "step-3",
+          "type": "badge",
+          "x": 844,
+          "y": 270,
+          "width": 360,
+          "height": 112,
+          "text": "3. Prioriser",
+          "fontSize": 26,
+          "appearAtMs": 480,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "step-4",
+          "type": "badge",
+          "x": 64,
+          "y": 410,
+          "width": 360,
+          "height": 112,
+          "text": "4. Escalader",
+          "fontSize": 26,
+          "appearAtMs": 600,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "step-5",
+          "type": "badge",
+          "x": 454,
+          "y": 410,
+          "width": 360,
+          "height": 112,
+          "text": "5. Résoudre",
+          "fontSize": 26,
+          "appearAtMs": 720,
+          "animation": "fade-up",
+          "tone": "card",
+          "emphasis": false
+        },
+        {
+          "id": "step-6",
+          "type": "badge",
+          "x": 844,
+          "y": 410,
+          "width": 360,
+          "height": 112,
+          "text": "6. Clôturer",
+          "fontSize": 26,
+          "appearAtMs": 840,
+          "animation": "fade-up",
+          "tone": "accent",
+          "emphasis": true
+        }
+      ],
+      "subtitles": [
+        {
+          "id": "conclusion-cue-1",
+          "text": "Déclarer, qualifier, prioriser, escalader, résoudre, clôturer. Ce cycle rend le service visible, et il garde le calme dans l'équipe.",
+          "startMs": 0,
+          "endMs": 10367,
+          "source": "segment"
+        }
+      ]
+    }
+  ]
+}

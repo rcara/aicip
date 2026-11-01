@@ -8,6 +8,7 @@ export const fr = {
   nav: {
     home: "Accueil",
     scenarios: "Scénarios",
+    explain: "Expliquer",
     signIn: "Connexion",
     signOut: "Se déconnecter",
     account: "Compte",
@@ -24,6 +25,7 @@ export const fr = {
     lede: "Une simulation de dix minutes : vous lisez la situation, vous choisissez quoi dire, vous voyez la conséquence, puis vous recommencez autrement.",
     cta: "Démarrer la démo",
     secondary: "Lire le scénario",
+    studio: "Ouvrir le studio d'explication",
   },
   beats: {
     title: "Pause, décidez, rejouez, réfléchissez",
@@ -232,6 +234,7 @@ export const en: typeof fr = {
   nav: {
     home: "Home",
     scenarios: "Scenarios",
+    explain: "Explain",
     signIn: "Sign in",
     signOut: "Sign out",
     account: "Account",
@@ -248,6 +251,7 @@ export const en: typeof fr = {
     lede: "A ten-minute simulation: read the situation, choose what to say, see the consequence, then try another branch.",
     cta: "Start the demo",
     secondary: "Read the scenario",
+    studio: "Open the explanation studio",
   },
   beats: {
     title: "Pause, decide, replay, reflect",

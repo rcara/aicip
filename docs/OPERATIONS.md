@@ -1,3 +1,5 @@
+> **Note d'exploitation de la simulation, pas une autorisation de déploiement.** Le rendu vidéo est décrit dans [INFRASTRUCTURE_CAPACITY_PLAN.md](INFRASTRUCTURE_CAPACITY_PLAN.md).
+
 # Exploitation
 
 Ce document décrit une préproduction possible. Il n'autorise pas à la lancer et il ne nomme aucun domaine. Aucune commande de ce fichier n'a été exécutée comme déploiement.

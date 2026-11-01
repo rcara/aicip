@@ -1,3 +1,5 @@
+> **Historique — plan de la simulation.** La feuille de route courante est [DEVELOPMENT_ROADMAP_V2.md](DEVELOPMENT_ROADMAP_V2.md).
+
 # Plan d'implémentation
 
 Le Sprint 1 est livré dans cette branche. Le détail de ce qui a été exécuté et vérifié est dans `docs/SPRINT1_REPORT.md`. Les choix déjà figés sont dans `docs/DECISIONS.md`.

@@ -7,3 +7,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+# Produit
+
+Le produit courant est le studio d'explication animée, pas la simulation de soft skills. Lire `docs/PRODUCT_VISION_V2.md` et `.cursor/rules/project.mdc` avant une évolution. Ne pas étendre `src/modules/simulation` comme fonction principale. Ne pas déployer.

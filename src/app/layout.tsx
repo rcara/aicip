@@ -59,6 +59,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
               </span>
             </Link>
             <nav aria-label={messages.nav.scenarios} className="flex items-center gap-4 text-sm">
+              <Link className="underline-offset-4 hover:underline" href="/explain">
+                {messages.nav.explain}
+              </Link>
               <Link className="underline-offset-4 hover:underline" href="/scenarios">
                 {messages.nav.scenarios}
               </Link>

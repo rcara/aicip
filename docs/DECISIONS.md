@@ -1,3 +1,5 @@
+> **Journal de la simulation (sprints 1 à 4).** Ces décisions restent vraies pour ce code. Elles ne dirigent plus le produit. La suite est dans [SYSTEM_ARCHITECTURE_V2.md](SYSTEM_ARCHITECTURE_V2.md).
+
 # Décisions techniques — Sprint 1
 
 Ces choix figent le socle. Les durées indiquées dans le backlog produit sont des hypothèses du dossier, pas des engagements de ce dépôt.

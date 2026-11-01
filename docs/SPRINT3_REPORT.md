@@ -1,3 +1,5 @@
+> **Rapport historique de la simulation.**
+
 # Rapport Sprint 3
 
 Branche `cursor/sprint-3-bounded-coach-9ea1`, basée sur `cursor/sprint-2-account-privacy-9ea1`. Aucun déploiement. Aucun fournisseur de modèle n'est nommé dans le dépôt.

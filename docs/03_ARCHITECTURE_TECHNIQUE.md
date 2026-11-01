@@ -1,3 +1,5 @@
+> **Historique — vision abandonnée comme produit principal.** L'architecture courante est [SYSTEM_ARCHITECTURE_V2.md](SYSTEM_ARCHITECTURE_V2.md). Ce document décrit la simulation.
+
 # Architecture technique — Interactive Soft Skills Academy
 Version 1.0 — 31/10/2026
 

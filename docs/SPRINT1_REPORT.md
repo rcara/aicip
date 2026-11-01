@@ -1,3 +1,5 @@
+> **Rapport historique de la simulation.**
+
 # Rapport Sprint 1
 
 Branche `cursor/sprint-1-simulation-9ea1`. Aucun déploiement.
