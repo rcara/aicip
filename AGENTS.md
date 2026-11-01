@@ -11,3 +11,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # Produit
 
 Le produit courant est le studio d'explication animée, pas la simulation de soft skills. Lire `docs/PRODUCT_VISION_V2.md` et `.cursor/rules/project.mdc` avant une évolution. Ne pas étendre `src/modules/simulation` comme fonction principale. Ne pas déployer.
+
+La génération (sprint 2) vit dans `src/modules/motion/generation`. Le modèle choisit un template du catalogue ; `layoutTemplate` place les objets ; un document invalide est refusé avant le lecteur et avant le rendu. Le fournisseur mock reste le défaut.

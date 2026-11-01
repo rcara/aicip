@@ -24,6 +24,7 @@ Chaque flèche produit un artefact réexécutable. Sprint 1 commence au storyboa
 | Module | Rôle | Statut |
 |---|---|---|
 | `src/modules/motion` | Schéma, mise en page, validation, storyboard | Courant |
+| `src/modules/motion/generation` | Fournisseur, Zod, PDF texte, refus avant rendu | Sprint 2 |
 | `src/remotion` | Composition, dessin SVG, audio | Courant |
 | `src/app/explain` | Studio de prévisualisation | Courant |
 | `src/modules/simulation` et scénarios | Produit v1 | Historique, ne pas étendre |

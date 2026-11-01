@@ -1,6 +1,6 @@
 # Pipeline de génération
 
-Sprint 1 ne appelle aucun modèle. Le pipeline est spécifié pour que le sprint 2 s'y branche sans changer le document vidéo.
+Sprint 1 n'appelle aucun modèle. Sprint 2 appelle un fournisseur pour le plan, le script et le choix du modèle visuel, puis valide le document. Il ne lance pas le rendu MP4.
 
 ## Étapes
 
@@ -19,9 +19,9 @@ Une scène régénérée ne relance pas les scènes voisines. L'échec d'une tâ
 
 ## Modèle
 
-Reprendre le dessin du coach historique, pas son sujet : un fournisseur remplaçable, une sortie Zod, un quota, un délai, aucun secret dans le client. Le mode sans réseau doit rester possible pour les tests, avec un storyboard d'exemple.
+Le dessin reprend le coach historique, pas son sujet : un fournisseur remplaçable, une sortie Zod, un délai, aucun secret dans le client. `EXPLAINER_MODE` vaut `mock` par défaut. `real` n'appelle le réseau que si l'URL, la clé et le nom du modèle sont définis. L'URL `http://` n'est acceptée que pour l'hôte local. Une réponse qui ne passe pas `modelDocumentSchema`, ou un projet qui ne passe pas `parseVideoProject` et `inspectProject`, est refusée. Le mock n'est pas substitué à une réponse invalide.
 
-Le modèle choisit un `template` du catalogue et remplit ses propriétés. Il ne choisit pas des coordonnées libres tant que la mise en page déterministe (`layoutTemplate`) suffit. Il n'émet pas de code.
+Le modèle choisit un `template` du catalogue et remplit ses textes. `layoutTemplate` place les objets. Le modèle n'émet pas de code, de coordonnées, ni de `schemaVersion`.
 
 ## Voix
 
